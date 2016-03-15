@@ -1,0 +1,22 @@
+{
+  "name": "back-end-capstone",
+  "description": "",
+  "main": "server.js",
+  "authors": [
+    "Michael Conrad <michael@threepears.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/threepears/back-end-capstone",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.0"
+  }
+}
