@@ -15,13 +15,6 @@ app.factory("StockInfo",
         return $q(function(resolve, reject){
         $http.get('/stock/' + stockName)
           .then(function (response) {
-            // companyName = response.data.companyname;
-            // indivStock = response.data.indivStock;
-            // lastPrice = response.data.lastprice;
-            // todaysHigh = response.data.todayshigh;
-            // todaysLow = response.data.todayslow;
-            // todaysOpen = response.data.todaysopen;
-            console.log("4", companyName);
             resolve(response);
           }, function (error) {
             reject(error);
@@ -42,36 +35,40 @@ app.factory("StockInfo",
     },
 
     getIndivStock: function(){
-      return indivStock; }
-    // },
+      return indivStock;
+    },
 
-    // getCompanyName: function(){
-    //   return companyName;
-    // },
+    setLastPrice: function(price){
+      lastPrice = price;
+    },
 
-    // getCompanyName: function(){
-    //   return companyName;
-    // },
+    getLastPrice: function(){
+      return lastPrice;
+    },
 
-    // getCompanyName: function(){
-    //   return companyName;
-    // },
+    setTodaysHigh: function(high){
+      todaysHigh = high;
+    },
 
-    // getCompanyName: function(){
-    //   return companyName;
-    // },
+    getTodaysHigh: function(){
+      return todaysHigh;
+    },
 
-    // getCompanyName: function(){
-    //   return companyName;
-    // },
+    setTodaysLow: function(low){
+      todaysLow = low;
+    },
 
-    // getCompanyName: function(){
-    //   return companyName;
-    // },
+    getTodaysLow: function(){
+      return todaysLow;
+    },
 
-    // getCompanyName: function(){
-    //   return companyName;
-    // }
+    setTodaysOpen: function(open){
+      todaysOpen = open;
+    },
+
+    getTodaysOpen: function(){
+      return todaysOpen;
+    }
   }
 
 }]);

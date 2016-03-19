@@ -12,13 +12,13 @@ app.controller("HomeControl",
     var stockResults = stockinfo.setCurrentStockInfo(stockPick);
 
     stockResults.then((response) => {
-
       stockinfo.setCompanyName(response.data.companyname);
       stockinfo.setIndivStock(response.data.indivStock);
-      // stockinfo.setLastPrice($scope.lastPrice);
-      // stockinfo.setTodaysHigh($scope.todaysHigh);
-      // stockinfo.setTodaysLow($scope.todaysLow);
-      // stockinfo.setTodaysOpen($scope.todaysOpen);
+      stockinfo.setLastPrice(response.data.lastprice);
+      stockinfo.setTodaysHigh(response.data.todayshigh);
+      stockinfo.setTodaysLow(response.data.todayslow);
+      stockinfo.setTodaysOpen(response.data.todaysopen);
+
       $location.path('/results').replace();
     });
   };
