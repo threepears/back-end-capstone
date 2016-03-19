@@ -3,52 +3,58 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+const request = require("request");
 
 const PORT = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get("/", (req, res) => {
+app.get("/stock/:stock", (req, res) => {
   const stock = req.params.stock;
-  console.log(stock);
+  console.log("Stock name>>>>>>", stock);
 
   //request.get(url, (err, response, data) => {
     //const newData = JSON.parse(data)
   //})
 
-  $http.request('http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol=' + stock, response => {
+  request('http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol=' + stock, (error, response, body) => {
+
+    console.log("BODY", body);
 
     let str = '';
     let result;
 
-    response.on('data', chunk => {
-      str += chunk;
+    // response.on('data', chunk => {
+    //   str += chunk;
+    // });
+
+    // console.log("STR", str);
+
+    // response.on('end', () => {
+    result = JSON.parse(body);
+
+    console.log("RESULT", result);
+    console.log("RESULT", result.name);
+    console.log("RESULT", result["Name"]);
+    // res.send(result);
+//
+
+    res.send({
+      indivStock: stock,
+      companyname: result["Name"],
+      lastprice: result["LastPrice"],
+      todaysopen: result["Open"],
+      todayshigh: result["High"],
+      todayslow: result["Low"]
     });
+    // });
 
-    response.on('end', () => {
-      result = JSON.parse(str);
-
-      res.render('singlestock', {
-        indivStock: stock,
-        companyname: result["Name"],
-        lastprice: result["LastPrice"],
-        todaysopen: result["Open"],
-        todayshigh: result["High"],
-        todayslow: result["Low"]
-      });
-    });
-
-  }).end();
-});
-
-
-
-
-
-mongoose.connection.on('open', () => {
-  console.log("MONGO OPEN");
-
-  app.listen(PORT, () => {
-    console.log(`Node.js server started. Listening on port ${PORT}`);
   });
 });
+
+
+app.listen(PORT, () => {
+  console.log(`Node.js server started. Listening on port ${PORT}`);
+});
+
+

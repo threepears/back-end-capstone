@@ -1,3 +1,6 @@
+$stockdark: #336895;
+$stockmedium: #4682b4;
+
 body {
   margin: 0;
   padding: 0;
@@ -14,7 +17,7 @@ a.btn {
   margin-right: 10px;
 }
 
-#topnav {
+.navbar-default {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#4682b4+0,336895+100 */
   background: #4682b4; /* Old browsers */
   background: -moz-linear-gradient(top, #4682b4 0%, #336895 100%); /* FF3.6-15 */
@@ -23,7 +26,31 @@ a.btn {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4682b4', endColorstr='#336895',GradientType=0 ); /* IE6-9 */
   color: #fff;
   text-shadow: 0 1px 2px #336895;
-  width: 100%;
+
+  .navbar-brand {
+    color: #fff;
+  }
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #fff; }
+
+.navbar-default .navbar-toggle:visited {
+  background-color: #4682B4; }
+
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:active,
+.navbar-default .navbar-toggle:focus {
+  background-color: #b5cde3; }
+
+.navbar-default .navbar-toggle:hover .icon-bar {
+  background-color: #4682B4; }
+
+.navbar-default .navbar-toggle {
+  border-color: #fff; }
+
+.navbar-default .navbar-nav > li > a {
+  color: #fff;
 }
 
 #headerid {
@@ -33,39 +60,39 @@ a.btn {
   padding: 20px;
 }
 
-#topnav ul {
-  float: right;
-  display: inline-block;
-  /*padding: 24px;*/
-  margin: 0;
-}
+// #topnav ul {
+//   float: right;
+//   display: inline-block;
+//   /*padding: 24px;*/
+//   margin: 0;
+// }
 
-#topnav ul li {
-  display: inline-block;
-  list-style: none;
-  padding: 24px 15px 23px;
-  /*margin-left: 15px;*/
-}
+// #topnav ul li {
+//   display: inline-block;
+//   list-style: none;
+//   padding: 24px 15px 23px;
+//   /*margin-left: 15px;*/
+// }
 
-#topnav ul li:hover {
-  cursor: pointer;
-  background: #336895; /* Old browsers */
-  background: -moz-linear-gradient(top, #336895 0%, #4682b4 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, #336895 0%, #4682b4 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, #336895 0%, #4682b4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#336895', endColorstr='#4682b4',GradientType=0 ); /* IE6-9 */
-}
+// #topnav ul li:hover {
+//   cursor: pointer;
+//   background: #336895; /* Old browsers */
+//   background: -moz-linear-gradient(top, #336895 0%, #4682b4 100%); /* FF3.6-15 */
+//   background: -webkit-linear-gradient(top, #336895 0%, #4682b4 100%); /* Chrome10-25,Safari5.1-6 */
+//   background: linear-gradient(to bottom, #336895 0%, #4682b4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+//   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#336895', endColorstr='#4682b4',GradientType=0 ); /* IE6-9 */
+// }
 
-#topnav ul li a,
-#headerid a {
-  color: #fff;
-  text-shadow: 0 1px 2px #336895;
-  text-decoration: none;
-}
+// #topnav ul li a,
+// #headerid a {
+//   color: #fff;
+//   text-shadow: 0 1px 2px #336895;
+//   text-decoration: none;
+// }
 
-#topnav ul li:hover a {
-  color: #f0ad4e;
-}
+// #topnav ul li:hover a {
+//   color: #f0ad4e;
+// }
 
 .pagecontent {
   padding: 5px 20px;
@@ -107,6 +134,14 @@ a.btn {
 
 .results {
   padding: 0 20px;
+}
+
+#resultsContent {
+  padding: 0 25px;
+
+  h1 {
+    margin: 0;
+  }
 }
 
 .stockinfo {
