@@ -33,9 +33,10 @@
           <div class="collapse navbar-collapse animate-hide" id="bs-example-navbar-collapse-1">
             <form class="navbar-form navbar-left" role="search">
               <div class="form-group navSearch">
-                <input type="text" ng-keypress="navreturnKey($event)" class="form-control" placeholder="{{searchText}}" ng-model="$parent.searchData" autofocus>
+                <input type="text" ng-keypress="navreturnKey($event)" class="form-control" placeholder="Enter stock symbol here" ng-model="$parent.searchData" autofocus>
               </div>
-              <button type="button" ng-click="$parent.search();closeNav()" class="btn btn-info btnSearch" id="navigationSearch">Stock Search</button>
+              <button type="button" ng-click="getStockInfo()" class="btn btn-info btnSearch" id="navigationSearch">Stock Search</button>
+              <!-- <button type="button" ng-click="getStockInfo();closeNav()" class="btn btn-info btnSearch" id="navigationSearch">Stock Search</button> -->
             </form>
             <ul class="nav navbar-nav navbar-right">
               <!-- li ng-show="loggedIn"><span class="userGreeting">WELCOME, {{username}}!</span></li> -->

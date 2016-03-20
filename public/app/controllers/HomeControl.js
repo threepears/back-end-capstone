@@ -7,7 +7,10 @@ app.controller("HomeControl",
   $scope.$parent.savedArtist = false;*/
 
   $scope.getStockInfo = function() {
-    var stockPick = $("#stockName").val();
+    var stockPick = $(".stockName").val();
+
+    console.log($(".stockName"));
+    console.log(stockPick);
 
     var stockResults = stockinfo.setCurrentStockInfo(stockPick);
 

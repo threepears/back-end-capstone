@@ -1,10 +1,14 @@
-<div id="resultsContent">
-  <h1>YAY</h1>
-  <button type="submit" class="btn btn-primary" ng-click="getName()">Get Name</button>
-  <div>{{companyName}}</div>
-  <div>{{indivStock}}</div>
-  <div>{{lastPrice}}</div>
-  <div>{{todaysHigh}}</div>
-  <div>{{todaysLow}}</div>
-  <div>{{todaysOpen}}</div>
-</div>
+<section class="pagecontent stock">
+  <h1>{{indivStock}}</h1>
+  <div class="results">
+    <h2><span class="blue">Company Name:</span> {{companyName}}</h2>
+    <h2><span class="blue">Current Stock Price:</span> {{lastPrice}}</h2>
+    <div class="stockinfo">
+      <div class="greystripe"><span class="blue">Today's Opening Price:</span> {{todaysOpen}}</div>
+      <div class="whitestripe"><span class="blue">Today's Low Price:</span> {{todaysLow}}</div>
+      <div class="greystripe"><span class="blue">Today's High Price:</span> {{todaysHigh}}</div>
+    </div>
+    <a href='/buy' type='button' class='btn btn-warning'>Buy Stock</a>
+    <a href='/' type='button' class='btn btn-info'>Search Again</a>
+  </div>
+</section>
