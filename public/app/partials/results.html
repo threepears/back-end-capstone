@@ -8,7 +8,7 @@
       <div class="whitestripe"><span class="blue">Today's Low Price:</span> {{todaysLow}}</div>
       <div class="greystripe"><span class="blue">Today's High Price:</span> {{todaysHigh}}</div>
     </div>
-    <a href='/buy' type='button' class='btn btn-warning'>Buy Stock</a>
-    <a href='/' type='button' class='btn btn-info'>Search Again</a>
+    <a ng-click="goBuy()" type='button' class='btn btn-warning'>Buy Stock</a>
+    <a ng-click="goHome()" type='button' class='btn btn-info'>Search Again</a>
   </div>
 </section>

@@ -9,9 +9,6 @@ app.controller("HomeControl",
   $scope.getStockInfo = function() {
     var stockPick = $(".stockName").val();
 
-    console.log($(".stockName"));
-    console.log(stockPick);
-
     var stockResults = stockinfo.setCurrentStockInfo(stockPick);
 
     stockResults.then((response) => {

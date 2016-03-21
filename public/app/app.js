@@ -16,9 +16,9 @@ app.config(['$routeProvider',
         templateUrl: 'app/partials/results.html',
         controller: 'ResultsControl'
       })
-      // .when('/pastsearches', {
-      //   templateUrl: 'app/partials/pastsearches.html',
-      //   controller: 'PastArtistControl'
-      // })
+      .when('/buy', {
+        templateUrl: 'app/partials/buy.html',
+        controller: 'BuyControl'
+      })
       .otherwise('/');
   }]);

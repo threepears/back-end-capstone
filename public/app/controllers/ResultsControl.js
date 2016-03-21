@@ -8,5 +8,9 @@ app.controller("ResultsControl",
     $scope.todaysLow = stockinfo.getTodaysLow();
     $scope.todaysOpen = stockinfo.getTodaysOpen();
 
+    $scope.goBuy = function() {
+      $location.path("/buy").replace();
+    }
+
 
 }]);
