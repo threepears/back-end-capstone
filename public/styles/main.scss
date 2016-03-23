@@ -30,6 +30,11 @@ a.btn {
   .navbar-brand {
     color: #fff;
   }
+
+  .navbar-brand:hover {
+    cursor: pointer;
+    color: #fff;
+  }
 }
 
 .glyphicon-piggy-bank:before {
