@@ -19,9 +19,14 @@
   },
   "homepage": "https://github.com/threepears/back-end-capstone#readme",
   "dependencies": {
+    "body-parser": "^1.15.0",
+    "emailjs": "^1.0.4",
     "express": "^4.13.4",
     "knex": "^0.10.0",
+    "passwordless": "^1.1.1",
+    "passwordless-redisstore": "^1.0.1",
     "pg": "^4.5.1",
+    "redis": "^2.5.3",
     "request": "^2.69.0"
   },
   "devDependencies": {

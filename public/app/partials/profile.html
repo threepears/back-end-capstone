@@ -1,0 +1,11 @@
+<section class="pagecontent profile">
+  <h1>{{user}}</h1>
+  <div>Portfolio value: ${{portfolioValue}}</div>
+  <div>Funds available: ${{bankAccount}}</div>
+
+  <h2>Current Portfolio</h2>
+  <ul class="stockinfo" ng-repeat="stock in ownedStocks">
+    <li ng-class-odd="'greystripe'" ng-class-even="'whitestripe'"><span class="blue">{{companyName}}</span> {{quantityOwned}} Purchase price: ${{initialPrice}} Current value: ${{lastPrice}} Total value: ${{totalValue}}</li>
+  </ul>
+
+</section>

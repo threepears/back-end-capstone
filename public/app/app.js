@@ -8,10 +8,14 @@ app.config(['$routeProvider',
         templateUrl: 'app/partials/home.html',
         controller: 'HomeControl'
       })
-      // .when('/login', {
-      //   templateUrl: 'app/partials/login.html',
-      //   controller: 'LoginControl'
-      // })
+      .when('/login', {
+        templateUrl: 'app/partials/login.html',
+        controller: 'LoginControl'
+      })
+      .when('/register', {
+        templateUrl: 'app/partials/register.html',
+        controller: 'RegisterControl'
+      })
       .when('/results', {
         templateUrl: 'app/partials/results.html',
         controller: 'ResultsControl'
@@ -19,6 +23,10 @@ app.config(['$routeProvider',
       .when('/buy', {
         templateUrl: 'app/partials/buy.html',
         controller: 'BuyControl'
+      })
+      .when('/profile', {
+        templateUrl: 'app/partials/profile.html',
+        controller: 'ProfileControl'
       })
       .otherwise('/');
   }]);
