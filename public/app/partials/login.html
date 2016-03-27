@@ -3,9 +3,11 @@
 
 <!--   <form action="../redisdata" method="POST"> -->
   <input type="text" name="user" id="loginEmail" placeholder="Enter email address here" />
-  <a ng-click="changePage('/profile');loginUser()" type='button' class='btn btn-warning'>Login</a>
+  <a ng-click="loginUser()" type='button' class='btn btn-warning'>Login</a>
 <!--   </form> -->
 
   <div class="disclaimer">If you haven't registered yet, please <a ng-click="changePage('/register')">click here</a>.</div>
+
+  <div class="error">{{loginError}}</div>
 
 </section>

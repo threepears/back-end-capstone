@@ -1,7 +1,10 @@
-app.controller("ProfileControl", ["$scope", "$rootScope", "$location", "StockInfo", function($scope, $rootScope, $location, stockinfo) {
+app.controller("ProfileControl", ["$scope", "$rootScope", "$location", "UserInfo", function($scope, $rootScope, $location, userinfo) {
 
 
-  /* Assign Buy Control variables */
+  $scope.userName = userinfo.getUserName();
+  $scope.bankAccount = userinfo.getUserMoney();
+  $scope.userId = userinfo.getUserId();
+  $scope.loggedIn = userinfo.getLoggedIn();
 
 
 }]);

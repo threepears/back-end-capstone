@@ -63,8 +63,17 @@ router.post("/redisdata", (req, res) => {
   pg('users').where({
     email: req.body.email })
     .then(function(data) {
-      console.log(data);
-      passwordless.requestToken(data);
+      console.log(data.length);
+      if (data.length === 0) {
+        console.log("SERVER ERROR", data);
+        res.sendStatus(400);
+      } else {
+        console.log("SERVER SUCCESS", data);
+        res.send(data);
+      }
+    })
+    .catch((err) => {
+      console.log("ERROR", err);
     });
 });
 
