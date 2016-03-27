@@ -1,8 +1,10 @@
 <section class="pagecontent login">
   <h1>Please Login</h1>
 
-  <input type="text" id="loginEmail" placeholder="Enter email address here" />
+<!--   <form action="../redisdata" method="POST"> -->
+  <input type="text" name="user" id="loginEmail" placeholder="Enter email address here" />
   <a ng-click="changePage('/profile');loginUser()" type='button' class='btn btn-warning'>Login</a>
+<!--   </form> -->
 
   <div class="disclaimer">If you haven't registered yet, please <a ng-click="changePage('/register')">click here</a>.</div>
 

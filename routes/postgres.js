@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const app = express();
 const router = express.Router();
 const request = require("request");
 
@@ -60,5 +61,6 @@ router.post("/postgres", (req, res) => {
 
   res.sendStatus(200);
 });
+
 
 module.exports = router;

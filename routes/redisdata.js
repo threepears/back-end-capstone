@@ -1,51 +1,103 @@
 'use strict';
 
 const express = require('express');
+const app = express();
 const router = express.Router();
-const request = require("request");
+const session = require('express-session')
 
 const passwordless = require("passwordless");
-// const redis = require("redis");
-// const redisClient = redis.createClient();
-// const redisStore = require("passwordless-redisstore");
-// const emailToken = require("emailjs");
+const redis = require("redis");
+const client = redis.createClient();
+const redisStore = require("passwordless-redisstore");
+const emailToken = require("emailjs");
 
-// const pathToRedis = null;
+const smtpServer = emailToken.server.connect({
 
-// const smtpServer = emailToken.server.connect({
-//   user: yourEmail,
-//   password: yourPwd,
-//   host: yourSmtp,
-//   ssl: true
-// });
+  ssl: true
+});
 
-// passwordless.init(new redisStore(PORT));
+client.on("error", function (err) {
+    console.log("Error " + err);
+});
 
 
+passwordless.init(new redisStore(6379, '127.0.0.1'));
+
+passwordless.addDelivery(
+  function(tokenToSend, uidToSend, recipient, callback) {
+    var host = 'localhost:3000';
+    smtpServer.send({
+        text:    'Hello!\nAccess your account here: http://'
+        + host + '?token=' + tokenToSend + '&uid='
+        + encodeURIComponent(uidToSend),
+        from:    "passwordless@threepears.com",
+        to:      recipient,
+        subject: 'Token for ' + host
+    }, function(err, message) {
+        if(err) {
+            console.log(err);
+        }
+        callback(err);
+    });
+});
+
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(passwordless.sessionSupport());
+app.use(passwordless.acceptToken({ successRedirect: '/#/profile'}));
 
 
-// router.post("/redis", (req, res) => {
-//   console.log(req.body);
 
-//   const stock = req.params.stock;
-//   console.log("Stock name>>>>>>", stock);
+// Initializing the Knex library
+const pg = require('knex')({
+  client: 'pg',
+  connection: process.env.PG_CONNECTION_STRING || 'postgres://localhost:5432/takingstock',
+  searchPath: 'knex, public'
+});
 
-//   request('http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol=' + stock, (error, response, body) => {
+router.post("/redisdata", (req, res) => {
+  pg('users').where({
+    email: req.body.email })
+    .then(function(data) {
+      console.log(data);
+      passwordless.requestToken(data);
+    });
+});
 
-//     let str = '';
-//     let result;
 
-//     result = JSON.parse(body);
+// Check to see if user in database
+// router.post("/redisdata", (req, res) => {
+//   pg('users').where({
+//     email: req.body.email })
+//     .then(function(data) {
+//       if (data) {
 
-//     res.send({
-//       indivStock: stock,
-//       companyname: result["Name"],
-//       lastprice: result["LastPrice"],
-//       todaysopen: result["Open"],
-//       todayshigh: result["High"],
-//       todayslow: result["Low"]
+//         console.log("YES DATA");
+//         passwordless.requestToken(
+//         function(user, delivery, callback) {
+//           console.log("BEFORE CALLBACK");
+//           callback(null, data[0].id);
+//         }),
+//         function(req, res) {
+//           console.log("ID SUCCESS", req.body);
+//           res.sendStatus(200);
+//         };
+
+//         console.log("DATA EMAIL", data[0].email);
+//       } else {
+//         res.sendStatus(400);
+//       }
+//      })
+//     .catch((err) => {
+//       console.log("ERROR", err)
 //     });
-//   });
+
+//   res.sendStatus(200);
 // });
+
 
 module.exports = router;

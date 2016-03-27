@@ -1,12 +1,12 @@
-app.controller("LoginControl", ["$scope", "$rootScope", "$location", "StockInfo", function($scope, $rootScope, $location, stockinfo) {
+app.controller("LoginControl", ["$scope", "$rootScope", "$location", "StockInfo", "$http", function($scope, $rootScope, $location, stockinfo, $http) {
 
 
   $scope.loginUser = function() {
-    let email = $("#loginEmail").val();
+    let emailAddress = $("#loginEmail").val();
 
-    console.log(email);
+    console.log(emailAddress);
 
-    $http.get('../postgres', {
+    $http.post('../redisdata', {
       email: emailAddress } )
     .then(function (response) {
       console.log("SUCCESS", response);
