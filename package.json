@@ -21,6 +21,7 @@
   "homepage": "https://github.com/threepears/back-end-capstone#readme",
   "dependencies": {
     "body-parser": "^1.15.0",
+    "bower": "^1.7.7",
     "emailjs": "^1.0.4",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
