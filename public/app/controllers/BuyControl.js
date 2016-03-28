@@ -1,14 +1,35 @@
-app.controller("BuyControl", ["$scope", "$rootScope", "$location", "StockInfo", function($scope, $rootScope, $location, stockinfo) {
+app.controller("BuyControl", ["$scope", "$rootScope", "$location", "$http", "StockInfo", "UserInfo", function($scope, $rootScope, $location, $http, stockinfo, userinfo) {
 
 
-  /* Assign Buy Control variables */
-  $scope.user = "Mike";
-  $scope.bankAccount = 1000;
-  $scope.quantityOwned = 25;
-  $scope.initialPrice = 15;
-  currentPrice = stockinfo.getLastPrice();
+  // $scope.quantityOwned = 25;
+  // $scope.initialPrice = 15;
 
-  $scope.count = Math.floor($scope.bankAccount / currentPrice);
-  $scope.totalValue = Math.round((currentPrice - $scope.initialPrice) * $scope.quantityOwned);
+  $scope.count = Math.floor($scope.$parent.bankAccount / $scope.lastPrice);
+
+  // $scope.totalValue = Math.round(($scope.lastPrice - $scope.initialPrice) * $scope.quantityOwned);
+
+  $scope.makePurchase = function() {
+    let quantity = $("#stockQuantity").val();
+    let cost = (quantity * $scope.lastPrice);
+
+    $scope.bankAccount = $scope.bankAccount - cost;
+
+    userinfo.setUserMoney($scope.bankAccount);
+
+    $http.put('../postgres', {
+      bankAccount: $scope.bankAccount,
+      stocksymbol: $scope.indivStock,
+      stockname: $scope.companyName,
+      quantityowned: quantity,
+      purchaseprice: $scope.lastPrice,
+      userid: $scope.userId} )
+    .then(function (response) {
+      console.log("SUCCESS", response);
+      $location.path('/profile').replace();
+      }, function (error) {
+      console.log(error);
+    });
+
+  }
 
 }]);

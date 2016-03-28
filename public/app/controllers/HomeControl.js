@@ -1,43 +1,29 @@
 app.controller("HomeControl",
-  ["$scope", "$rootScope", "$location", "StockInfo", function($scope, $rootScope, $location, stockinfo) {
+  ["$scope", "$rootScope", "$location", "$http", "StockInfo", "UserInfo", function($scope, $rootScope, $location, $http, stockinfo, userinfo) {
 
 
-  /* Declare scope variables */
-  /*  $scope.$parent.saveArtistButton = "Save This Artist";
-  $scope.$parent.savedArtist = false;*/
+    $scope.loginUser = function() {
+      let emailAddress = $("#loginEmail").val();
 
-  $scope.getStockInfo = function() {
-    var stockPick = $(".stockName").val();
+      console.log(emailAddress);
 
-    var stockResults = stockinfo.setCurrentStockInfo(stockPick);
+      $http.post('../redisdata', {
+        email: emailAddress } )
+      .then(function (response) {
+        console.log("CONTROLLER SUCCESS", response);
+        userinfo.setUserName(response.data[0].firstname);
+        userinfo.setUserMoney(response.data[0].bankAccount);
+        userinfo.setUserId(response.data[0].id);
+        userinfo.setLoggedIn(true);
 
-    stockResults.then((response) => {
-      stockinfo.setCompanyName(response.data.companyname);
-      stockinfo.setIndivStock(response.data.indivStock);
-      stockinfo.setLastPrice(response.data.lastprice);
-      stockinfo.setTodaysHigh(response.data.todayshigh);
-      stockinfo.setTodaysLow(response.data.todayslow);
-      stockinfo.setTodaysOpen(response.data.todaysopen);
+        $location.path('/profile').replace();
 
-      $location.path('/results').replace();
-    });
-  };
-
-
-  /* Add purchased stock to user's account */
-  // $scope.saveArtist = function() {
-  //   var selectedArtist = $scope.artistName;
-  //   console.log(selectedArtist);
-
-  //   var userUid = Authenticate.getUid();
-  //   console.log(userUid);
-
-  //   var userRef = new Firebase("https://hoodat.firebaseio.com/users/" + userUid + "/artists");
-
-  //   userRef.push(selectedArtist);
-
-  //   $scope.$parent.saveArtistButton = "Artist Saved!"
-  //   $scope.$parent.savedArtist = true;
-  // };
+        // $scope.loggedIn = true;
+        // $scope.userName = response.data[0].firstname;
+        }, function (error) {
+        console.log("CONTROLLER ERROR", error);
+        $scope.loginError = "You have not yet registered. Please register now!";
+      });
+    };
 
 }]);

@@ -2,13 +2,15 @@
   <h1>{{indivStock}}</h1>
   <div class="results">
     <h2><span class="blue">Company Name:</span> {{companyName}}</h2>
-    <h2><span class="blue">Current Stock Price:</span> {{lastPrice}}</h2>
+    <h2><span class="blue">Current Stock Price:</span> {{lastPrice | currency}}</h2>
     <div class="stockinfo">
-      <div class="greystripe"><span class="blue">Today's Opening Price:</span> {{todaysOpen}}</div>
-      <div class="whitestripe"><span class="blue">Today's Low Price:</span> {{todaysLow}}</div>
-      <div class="greystripe"><span class="blue">Today's High Price:</span> {{todaysHigh}}</div>
+      <div class="greystripe"><span class="blue">Today's Opening Price:</span> {{todaysOpen | currency}}</div>
+      <div class="whitestripe"><span class="blue">Today's Low Price:</span> {{todaysLow | currency}}</div>
+      <div class="greystripe"><span class="blue">Today's High Price:</span> {{todaysHigh | currency}}</div>
     </div>
-    <a ng-click="changePage('/buy')" type='button' class='btn btn-warning'>Buy Stock</a>
-    <a ng-click="changePage('/')" type='button' class='btn btn-info'>Search Again</a>
+    <a ng-click="checkLogin()" type='button' class='btn btn-warning'>Buy Stock</a>
+    <div class="buyerror">{{buyError}}</div>
+    <!-- <a ng-click="changePage('/')" type='button' class='btn btn-info'>Search Again</a>
+    <a ng-click="changePage('/buy')" type='button' class='btn btn-warning'>Buy Stock</a> -->
   </div>
 </section>

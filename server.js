@@ -11,6 +11,15 @@ const bodyparser = require("body-parser");
 const PORT = process.env.PORT || 3000;
 
 
+// CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
+app.all('*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("X-Frame-Options", "SAMEORIGIN");
+    next();
+});
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyparser.json());

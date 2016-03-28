@@ -8,6 +8,10 @@ app.config(['$routeProvider',
         templateUrl: 'app/partials/home.html',
         controller: 'HomeControl'
       })
+      .when('/search', {
+        templateUrl: 'app/partials/search.html',
+        controller: 'SearchControl'
+      })
       .when('/login', {
         templateUrl: 'app/partials/login.html',
         controller: 'LoginControl'
@@ -27,6 +31,10 @@ app.config(['$routeProvider',
       .when('/profile', {
         templateUrl: 'app/partials/profile.html',
         controller: 'ProfileControl'
+      })
+      .when('/scoreboard', {
+        templateUrl: 'app/partials/scoreboard.html',
+        controller: 'ScoreboardControl'
       })
       .otherwise('/');
   }]);

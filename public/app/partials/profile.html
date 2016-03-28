@@ -1,11 +1,17 @@
 <section class="pagecontent profile">
-  <h1>{{userName}}</h1>
-  <div>Portfolio value: ${{portfolioValue}}</div>
-  <div>Funds available: ${{bankAccount}}</div>
+  <div class="profilesummary">
+    <div class="profileheader">
+      <h1>{{userName}}</h1>
+      <h3>Portfolio value: {{portfolioValue | currency}}</h3>
+      <h3>Funds available: {{bankAccount | currency}}</h3>
+    </div>
 
-  <h2>Current Portfolio</h2>
-  <ul class="stockinfo" ng-repeat="stock in ownedStocks">
-    <li ng-class-odd="'greystripe'" ng-class-even="'whitestripe'"><span class="blue">{{companyName}}</span> {{quantityOwned}} Purchase price: ${{initialPrice}} Current value: ${{lastPrice}} Total value: ${{totalValue}}</li>
-  </ul>
+    <div class="profilestocks">
+      <h2>Current Portfolio</h2>
+      <ul class="stockinfo" >
+        <li ng-class-even="'greystripe'" ng-class-odd="'whitestripe'" ng-repeat="stock in ownedStocks"><span class="blue">{{stock.stockname}}</span> {{stock.quantityowned}} Purchase price: {{stock.purchaseprice | currency}} Current value: {{lastPrice | currency}} Total value: {{totalValue | currency}}</li>
+      </ul>
+    </div>
+  </div>
 
 </section>

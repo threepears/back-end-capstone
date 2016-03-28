@@ -1,9 +1,64 @@
 <section class="pagecontent home">
-  <h1>Get Free Stock Quotes</h1>
-    <form id="#quote" method="POST">
-      <input type="text" class="stockName" name="stockName" placeholder="Enter stock symbol here" />
-      <div>
-        <button id="#submitQuote" type="submit" class="btn btn-primary" ng-click="getStockInfo()">Get Info</button>
+
+  <div class="homeheader">
+    <div class="homeheadertext">
+      <h1>Taking $tock</h1>
+      <h3>Test your mettle on the market ...<br />
+      for <span class="emphasis">FREE!</span></h3>
+      <button id="homeRegister" ng-click="registerWindow()" type="submit" class="btn btn-default btn-lg">Sign Up Today</button>
+    </div>
+
+    <div class="homelogin">
+      <input type="text" name="user" id="loginEmail" placeholder="Enter email address here" autofocus />
+      <a ng-click="loginUser()" type='button' class='btn btn-primary btn-lg'>Login</a>
+
+      <div class="disclaimer">If you haven't registered yet, please <a ng-click="registerWindow()">click here</a>.</div>
+
+      <div class="error">{{loginError}}</div>
+    </div>
+
+    <div class="homeregister">
+      <h3>Please Register To Play!</h3>
+
+      <input type="text" id="firstName" placeholder="Enter first name here" autofocus />
+      <input type="text" id="lastName" placeholder="Enter last name here" />
+      <input type="email" id="registerEmail" placeholder="Enter email address here" />
+      <a ng-click="loginWindow();registerUser()" type='button' class='btn btn-primary'>Complete Registration</a>
+    </div>
+
+    <div class="illustration">
+      <img src="../../images/stock-illustration.svg" />
+    </div>
+  </div>
+
+
+  <div class="container-fluid homeColumns">
+    <div class="row">
+      <div class="col-xs-4">
+        <div class="colheader">
+          <i class="fa fa-money"></i>
+        </div>
+        <h3>Not Real Money</h3>
+        <p>"It goes without saying that when you have attacks that take place, when 30 people get killed in Brussels, something went wrong ... We have got to improve our efforts to make sure it does not happen again," he told CNN's Jake Tapper on "State of the Union" Sunday when pressed for specifics.</p>
       </div>
-    </form>
+      <div class="col-xs-4">
+        <div class="colheader">
+          <i class="fa fa-thumbs-o-up"></i>
+        </div>
+        <h3>Real Stock Results</h3>
+        <p>Sanders credited President Barack Obama for his handling of the fight against ISIS, saying that the terrorist organization is "on the defensive. They are retreating."
+        Sanders also made a claim that seems at odds with intelligence agencies' concerns about ISIS-inspired attacks in Western countries.
+        "I think we know who ISIS is. We know those people who are planning attacks against our European allies and against ourselves," he said.</p>
+      </div>
+      <div class="col-xs-4">
+        <div class="colheader">
+          <i class="fa fa-users"></i>
+        </div>
+        <h3>Play Your Friends</h3>
+        <p>Sanders' comments come after he swept three Western Democratic presidential caucuses on Saturday, defeating Hillary Clinton in Washington, Alaska and Hawaii.
+        Of his campaign, which lags behind Clinton in the delegate count in large part because Clinton has been endorsed by many more so-called "superdelegates," Sanders said that "we think we do have a path to victory."</p>
+      </div>
+    </div>
+  </div>
+
 </section>

@@ -1,43 +1,55 @@
+/***************************
+CONTENT
+***************************/
+html,
 body {
   margin: 0;
   padding: 0;
   border: 0;
-  font-family: Helvetica, Tahoma, sans-serif; }
-
-span.blue {
-  color: #336895;
-  font-weight: bold; }
+  font-family: Helvetica, Tahoma, sans-serif;
+  height: 100%; }
 
 a.btn {
   margin-right: 10px; }
 
-.navbar-default {
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#4682b4+0,336895+100 */
-  background: #4682b4;
+#master {
+  min-height: 100%; }
+
+.navbar {
+  margin-bottom: 0; }
+  .navbar .navbar-right li:hover,
+  .navbar .navbar-right li:active {
+    background-color: #54215e; }
+
+.navbar-default,
+footer {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#a045b2+0,833393+100 */
+  background: #a045b2;
   /* Old browsers */
-  background: -moz-linear-gradient(top, #4682b4 0%, #336895 100%);
+  background: -moz-linear-gradient(top, #a045b2 0%, #833393 100%);
   /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, #4682b4 0%, #336895 100%);
+  background: -webkit-linear-gradient(top, #a045b2 0%, #833393 100%);
   /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, #4682b4 0%, #336895 100%);
+  background: linear-gradient(to bottom, #a045b2 0%, #833393 100%);
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4682b4', endColorstr='#336895',GradientType=0 );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a045b2', endColorstr='#833393',GradientType=0 );
   /* IE6-9 */
   color: #fff;
-  text-shadow: 0 1px 2px #336895; }
-  .navbar-default .navbar-brand {
-    color: #fff; }
-  .navbar-default .navbar-brand:hover {
+  text-shadow: 0 1px 2px #833393;
+  border: 0; }
+  .navbar-default .navbar,
+  footer .navbar {
+    border-radius: 0; }
+  .navbar-default .container-fluid,
+  footer .container-fluid {
+    padding-left: 30px; }
+  .navbar-default .navbar-brand,
+  footer .navbar-brand {
+    color: #e9e0eb; }
+  .navbar-default .navbar-brand:hover,
+  footer .navbar-brand:hover {
     cursor: pointer;
     color: #fff; }
-
-.glyphicon-piggy-bank:before {
-  font-size: 1.2em; }
-
-.branding {
-  font-size: 1.2em;
-  position: relative;
-  top: -2px; }
 
 .navbar-default .navbar-toggle .icon-bar {
   background-color: #fff; }
@@ -56,8 +68,46 @@ a.btn {
 .navbar-default .navbar-toggle {
   border-color: #fff; }
 
+.navbar-default .navbar-nav > li > a:link,
+.navbar-default .navbar-nav > li > a:visited,
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:active
+.navbar-default .navbar-nav > li > a:focus,
+.navbar-default .navbar-nav > li.dropdown a,
 .navbar-default .navbar-nav > li > a {
+  color: #fff;
+  cursor: pointer; }
+
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:focus,
+.navbar-default .navbar-nav > .open > a:hover {
+  background-color: #54215e;
   color: #fff; }
+
+span.userGreeting {
+  padding: 15px;
+  display: block;
+  background-color: #54215e; }
+
+.dropdown-menu {
+  padding: 0;
+  min-width: 300px;
+  background-color: #e9e0eb; }
+
+.btn-primary.searchButton {
+  background-color: #a045b2;
+  border: 0;
+  margin-left: 10px; }
+
+.btn-primary.searchButton:hover,
+.btn-primary.searchButton:active,
+.btn-primary.searchButton:focus {
+  background-color: #833393; }
+
+.form-control:focus {
+  border-color: #a045b2;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(160, 69, 178, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(160, 69, 178, 0.6); }
 
 #headerid {
   text-transform: uppercase;
@@ -69,13 +119,12 @@ a.btn {
   padding: 5px 20px; }
 
 .pagecontent.home {
-  text-align: center; }
+  padding: 0; }
 
 .pagecontent.home h1 {
-  text-align: center;
-  color: #336895;
-  text-shadow: 0px 1px 2px #336895;
-  margin: 40px 0;
+  color: #fff;
+  text-shadow: 0px 1px 2px #833393;
+  margin: 50px 0 40px;
   font-size: 4em; }
 
 .pagecontent.home input {
@@ -83,20 +132,189 @@ a.btn {
   text-align: center;
   margin-bottom: 20px;
   padding: 10px 20px;
-  border-radius: 10px; }
+  border-radius: 10px;
+  color: #000; }
 
 .pagecontent.home a.btn {
   text-align: center;
   text-transform: uppercase;
   margin: 0 auto; }
 
+.btn-default {
+  color: #fff;
+  background-color: transparent;
+  border: 2px solid #fff; }
+
+.btn-default:hover,
+.btn-default:active {
+  color: #a045b2;
+  background-color: #fff;
+  border: 2px solid #fff; }
+
+.homeheader {
+  background-color: #a045b2;
+  color: #fff;
+  padding: 20px 40px 40px 60px; }
+
+.homeheadertext {
+  display: inline-block;
+  width: 55%; }
+
+.homeheadertext h3 {
+  line-height: 1.3em;
+  font-weight: 300; }
+
+.coloraccent {
+  color: #a045b2;
+  font-weight: bold; }
+
+.emphasis {
+  font-weight: bold;
+  font-style: italic; }
+
+#homeRegister {
+  margin-top: 20px; }
+
+.homeColumns {
+  padding: 40px; }
+
+.illustration {
+  display: inline-block;
+  width: 40%;
+  vertical-align: top;
+  padding-top: 10px; }
+
+.illustration img {
+  width: 100%; }
+
+.row h3 {
+  color: #833393;
+  padding-left: 5px; }
+
+.col-xs-4 {
+  padding: 0 20px; }
+
+.col-xs-4 i {
+  color: #a045b2;
+  font-size: 4em; }
+
+.col-xs-4 p {
+  padding-left: 5px; }
+
+.colheader {
+  text-align: center;
+  background-color: #e9e0eb;
+  padding: 20px;
+  border-radius: 10px; }
+
+.homelogin {
+  display: none;
+  padding: 90px 60px 0 0;
+  text-align: center; }
+
+.homelogin a.btn.btn-primary,
+.homeregister a.btn.btn-primary {
+  background-color: #54215e;
+  border: 0; }
+
+.homelogin a.btn.btn-primary:hover,
+.homelogin a.btn.btn-primary:active,
+.homelogin a.btn.btn-primary:focus,
+.homeregister a.btn.btn-primary:hover,
+.homeregister a.btn.btn-primary:active,
+.homeregister a.btn.btn-primary:focus {
+  background-color: #321439; }
+
+.homeregister {
+  display: none;
+  padding: 40px 60px 0 0;
+  text-align: center; }
+
+.homeregister h3 {
+  color: #e9e0eb;
+  margin-bottom: 20px; }
+
+.pagecontent.home .homeregister input {
+  font-size: 1.6em; }
+
+.disclaimer {
+  margin: 20px 0; }
+
+div.disclaimer a,
+div.disclaimer a:visited {
+  color: #ffe400; }
+
+.disclaimer a:hover,
+.disclaimer a:active {
+  text-decoration: none;
+  cursor: pointer;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.6); }
+
+.error {
+  color: #99FF00;
+  font-style: italic; }
+
+.pagecontent.profile {
+  padding: 20px; }
+
+.profilesummary {
+  border: 2px solid #a045b2;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px; }
+
+.profileheader {
+  background-color: #a045b2;
+  color: #fff;
+  padding: 20px 20px 10px; }
+
+.profileheader h1 {
+  font-size: 4em;
+  margin-top: 0;
+  text-shadow: 0px 1px 2px #833393; }
+
+.profileheader h3 {
+  margin: 5px 0 10px 0; }
+
+.profilestocks {
+  min-height: 470px;
+  padding: 20px; }
+
+.profilestocks h2 {
+  color: #a045b2;
+  margin-top: 0;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e7e7e7; }
+
+.stockinfo {
+  margin: 20px 0; }
+
+.stockinfo li {
+  list-style-type: none; }
+
+.profilestocks .stockinfo {
+  padding-left: 0;
+  margin: 0; }
+
+.pagecontent.stock,
+.pagecontent.buy {
+  padding: 20px;
+  min-height: 470px; }
+
 .pagecontent.stock h1 {
-  background-color: #336895;
-  text-shadow: 0px 1px 2px #4682b4;
+  background-color: #a045b2;
+  text-shadow: 0px 1px 2px #833393;
   color: #fff;
   border-radius: 10px;
   padding: 20px;
   margin-top: 0; }
+
+.results a.btn.btn-info {
+  background-color: #a045b2;
+  border: 0; }
+
+.results a.btn.btn-info:hover,
+.results a.btn.btn-info:active {
+  background-color: #833393; }
 
 .results {
   padding: 0 20px; }
@@ -105,13 +323,6 @@ a.btn {
   padding: 0 25px; }
   #resultsContent h1 {
     margin: 0; }
-
-.error {
-  color: #ff0000;
-  font-style: italic; }
-
-.stockinfo {
-  margin: 20px 0; }
 
 .greystripe {
   background-color: #eee;
@@ -124,5 +335,21 @@ a.btn {
   color: #336895;
   text-shadow: 0px 1px 2px #336895;
   font-size: 3em; }
+
+.buyerror {
+  color: #ff0000;
+  font-style: italic;
+  margin-top: 20px; }
+
+footer {
+  padding: 20px;
+  text-align: center; }
+
+/***************************************
+MEDIA QUERIES
+***************************************/
+@media (min-width: 768px) {
+  .navbar {
+    border-radius: 0; } }
 
 /*# sourceMappingURL=main.css.map */

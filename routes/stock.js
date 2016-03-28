@@ -27,4 +27,19 @@ router.get("/stock/:stock", (req, res) => {
   });
 });
 
+
+router.get("/stocksearch/:stock", (req, res) => {
+  const stock = req.params.stock;
+
+
+  request('http://dev.markitondemand.com/Api/v2/Lookup/json?input=' + stock, (error, response, body) => {
+
+
+    let result = JSON.parse(body);
+
+    res.send(result);
+  });
+});
+
+
 module.exports = router;

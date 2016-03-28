@@ -9,6 +9,9 @@
     <title>Taking Stock - The Fun Stock Market Game</title>
 
     <link rel="stylesheet" type="text/css" href="vendor/bootstrap/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
     <link rel="stylesheet" type="text/css" href="styles/main.css">
 
   </head>
@@ -16,7 +19,7 @@
 
   <body ng-app="TakingStockApp">
 
-    <div ng-controller="MasterControl">
+    <div ng-controller="MasterControl" id="master">
 
       <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -27,25 +30,27 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" ng-click="changePage('/')"><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span> &nbsp;<span class="branding">Taking $tock<span></a>
+            <a class="navbar-brand" ng-click="changePage('/')"><span class="branding">TAKING $TOCK<span></a>
           </div>
 
           <div class="collapse navbar-collapse animate-hide" id="bs-example-navbar-collapse-1">
-            <!-- <form class="navbar-form navbar-left" role="search">
-              <div class="form-group navSearch">
-                <input type="text" ng-keypress="navreturnKey($event)" class="form-control" placeholder="Enter stock symbol here" ng-model="$parent.searchData" autofocus>
-              </div>
-              <button type="button" ng-click="getStockInfo()" class="btn btn-info btnSearch" id="navigationSearch">Stock Search</button>
-              <button type="button" ng-click="getStockInfo();closeNav()" class="btn btn-info btnSearch" id="navigationSearch">Stock Search</button>
-            </form> -->
             <ul class="nav navbar-nav navbar-right">
-              <!-- li ng-show="loggedIn"><span class="userGreeting">WELCOME, {{username}}!</span></li> -->
-              <!-- <li ng-show="loggedIn" ng-click="gotoAnchor('discography')"><a href="#">DISCOGRAPHY</a></li>
-              <li ng-show="loggedIn"><a href="#videos">VIDEOS</a></li> -->
+              <li ng-show="loggedIn"><span class="userGreeting">Hello, {{userName}}!</span></li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">STOCK SEARCH <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                      <input type="text" id="autocomplete" class="form-control stockName" ng-model="symbolSearch" placeholder="Enter stock symbol here">
+                    </div>
+                    <button type="submit" class="btn btn-primary searchButton" id="submitQuote" ng-click="getStockInfo();closeNav()">Search</button>
+                  </form>
+                </ul>
+              </li>
               <li><a href="#/scoreboard">SCOREBOARD</a></li>
-              <li ng-hide="loggedIn"><a href="#/login">LOGIN</a></li>
-              <!-- <li ng-show="loggedIn" ng-click="getPastArtists()"><span class="userOptions">PAST SEARCHES</span></li> -->
-              <!-- <li ng-show="loggedIn" ng-click="logout()"><a href="#">LOGOUT</a></li> -->
+
+              <li ng-show="loggedIn" ng-click="logout()"><a>LOGOUT</a></li>
+              <li ng-hide="loggedIn"><a href="#/" ng-click="loginWindow()">LOGIN</a></li>
             </ul>
           </div>
         </div>
@@ -56,6 +61,12 @@
 
     </div>
 
+    <footer>
+      <div class="footerContent">
+        &copy;2016 Taking Stock, Inc.
+      </div>
+    </footer>
+
 
     <!-- ANGULAR SCRIPTS -->
     <script src="vendor/angular/angular.min.js"></script>
@@ -63,31 +74,37 @@
     <script src="vendor/angular-filter/dist/angular-filter.min.js"></script>
 
     <script src="vendor/jquery/dist/jquery.min.js"></script>
+    <script src="vendor/jquery-ui/jquery-ui.min.js"></script>
     <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
 
+
+<!--     <script>
+      $( "#autocomplete" ).autocomplete({
+        source: 'http://dev.markitondemand.com/Api/v2/Lookup/json?input=' + $scope.symbolSearch
+      });
+    </script>
+ -->
 
     <!-- APP.JS FILE -->
     <script src="app/app.js"></script>
 
 
-      <!-- FACTORY SCRIPTS -->
-      <script src="app/factories/StockInfo.js"></script>
-      <script src="app/factories/UserInfo.js"></script>
-      <!-- <script src="app/factories/Authenticate.js"></script>
-      <script src="app/factories/Keys.js"></script> -->
+    <!-- FACTORY SCRIPTS -->
+    <script src="app/factories/StockInfo.js"></script>
+    <script src="app/factories/UserInfo.js"></script>
 
-      <!-- CONTROLLER SCRIPTS -->
-      <script src="app/controllers/MasterControl.js"></script>
-      <script src="app/controllers/HomeControl.js"></script>
-      <script src="app/controllers/ResultsControl.js"></script>
-      <script src="app/controllers/BuyControl.js"></script>
-      <script src="app/controllers/ProfileControl.js"></script>
-      <script src="app/controllers/LoginControl.js"></script>
-      <script src="app/controllers/RegisterControl.js"></script>
-      <!-- <script src="app/controllers/NavControl.js"></script>
-      <script src="app/controllers/MainControl.js"></script>
-      <script src="app/controllers/PastArtistControl.js"></script>
-      <script src="app/controllers/FooterControl.js"></script>  -->
+
+    <!-- CONTROLLER SCRIPTS -->
+    <script src="app/controllers/MasterControl.js"></script>
+    <script src="app/controllers/HomeControl.js"></script>
+    <script src="app/controllers/SearchControl.js"></script>
+    <script src="app/controllers/ResultsControl.js"></script>
+    <script src="app/controllers/BuyControl.js"></script>
+    <script src="app/controllers/ProfileControl.js"></script>
+    <script src="app/controllers/LoginControl.js"></script>
+    <script src="app/controllers/RegisterControl.js"></script>
+    <script src="app/controllers/ScoreboardControl.js"></script>
+
 
   </body>
 

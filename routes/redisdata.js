@@ -5,50 +5,50 @@ const app = express();
 const router = express.Router();
 const session = require('express-session')
 
-const passwordless = require("passwordless");
-const redis = require("redis");
-const client = redis.createClient();
-const redisStore = require("passwordless-redisstore");
-const emailToken = require("emailjs");
+// const passwordless = require("passwordless");
+// const redis = require("redis");
+// const client = redis.createClient();
+// const redisStore = require("passwordless-redisstore");
+// const emailToken = require("emailjs");
 
-const smtpServer = emailToken.server.connect({
+// const smtpServer = emailToken.server.connect({
 
-  ssl: true
-});
+//   ssl: true
+// });
 
-client.on("error", function (err) {
-    console.log("Error " + err);
-});
+// client.on("error", function (err) {
+//     console.log("Error " + err);
+// });
 
 
-passwordless.init(new redisStore(6379, '127.0.0.1'));
+// passwordless.init(new redisStore(6379, '127.0.0.1'));
 
-passwordless.addDelivery(
-  function(tokenToSend, uidToSend, recipient, callback) {
-    var host = 'localhost:3000';
-    smtpServer.send({
-        text:    'Hello!\nAccess your account here: http://'
-        + host + '?token=' + tokenToSend + '&uid='
-        + encodeURIComponent(uidToSend),
-        from:    "passwordless@threepears.com",
-        to:      recipient,
-        subject: 'Token for ' + host
-    }, function(err, message) {
-        if(err) {
-            console.log(err);
-        }
-        callback(err);
-    });
-});
+// passwordless.addDelivery(
+//   function(tokenToSend, uidToSend, recipient, callback) {
+//     var host = 'localhost:3000';
+//     smtpServer.send({
+//         text:    'Hello!\nAccess your account here: http://'
+//         + host + '?token=' + tokenToSend + '&uid='
+//         + encodeURIComponent(uidToSend),
+//         from:    "passwordless@threepears.com",
+//         to:      recipient,
+//         subject: 'Token for ' + host
+//     }, function(err, message) {
+//         if(err) {
+//             console.log(err);
+//         }
+//         callback(err);
+//     });
+// });
 
-app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: false
-}));
+// app.use(session({
+//   secret: 'keyboard cat',
+//   resave: false,
+//   saveUninitialized: false
+// }));
 
-app.use(passwordless.sessionSupport());
-app.use(passwordless.acceptToken({ successRedirect: '/#/profile'}));
+// app.use(passwordless.sessionSupport());
+// app.use(passwordless.acceptToken({ successRedirect: '/#/profile'}));
 
 
 
