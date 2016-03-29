@@ -28,16 +28,24 @@ router.get("/stock/:stock", (req, res) => {
 });
 
 
-router.get("/stocksearch/:stock", (req, res) => {
-  const stock = req.params.stock;
+router.get("/stocksearch", (req, res) => {
 
+  const stock = req.query.term;
 
   request('http://dev.markitondemand.com/Api/v2/Lookup/json?input=' + stock, (error, response, body) => {
 
+    console.log("API RESPONSE", response);
 
     let result = JSON.parse(body);
 
-    res.send(result);
+    console.log("JSON RESULT", result);
+
+    let thingy = [];
+    result.forEach(thing => {
+      thingy.push(thing.Name);
+    });
+
+    res.send(thingy);
   });
 });
 

@@ -12,6 +12,8 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
+    <link rel="stylesheet" href="vendor/jquery-ui/themes/base/autocomplete.css">
+
     <link rel="stylesheet" type="text/css" href="styles/main.css">
 
   </head>
@@ -41,8 +43,10 @@
                 <ul class="dropdown-menu">
                   <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">
-                      <input type="text" id="autocomplete" class="form-control stockName" ng-model="symbolSearch" placeholder="Enter stock symbol here">
+                      <input type="text" id="autocomplete" class="form-control input- ui-autocomplete-input stockName" ng-model="symbolSearch" placeholder="Enter stock symbol here">
                     </div>
+                    <span class="help-inline hide"><img src="resources/spinner.gif" align="absmiddle" /> loading...</span>
+                    <span class="help-inline hide label label-info"></span>
                     <button type="submit" class="btn btn-primary searchButton" id="submitQuote" ng-click="getStockInfo();closeNav()">Search</button>
                   </form>
                 </ul>
