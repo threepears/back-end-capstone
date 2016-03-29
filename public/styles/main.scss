@@ -470,14 +470,10 @@ MEDIA QUERIES
 
 @media (min-width: 900px) {
 
-  nav .container-fluid,
-  .navbar-default .container-fluid, {
-    padding: 0;
-  }
-
   .headercontain,
   .container-fluid,
-  .pagecontent.profile {
+  .pagecontent.profile,
+  .pagecontent.stock {
     width: 900px;
     margin: 0 auto;
   }
