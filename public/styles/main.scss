@@ -1,4 +1,4 @@
-$stocklight: #e7e7e7;
+$stocklight: #eddaf1;
 $stockmedium: #a045b2;
 $stockdark: #833393;
 $stockextradark: #54215e;
@@ -315,6 +315,7 @@ div.disclaimer a:visited {
   border: 2px solid $stockmedium;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  position: relative;
 }
 
 .profileheader {
@@ -359,6 +360,23 @@ div.disclaimer a:visited {
   margin: 0;
 }
 
+.profilepic {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  border-radius: 50%;
+  border: 8px solid $stockextradark;
+  box-shadow: 0 4px 8px $stockextradark;
+  width: 200px;
+  height: 200px;
+  background-image: url("http://tammo.org/ttg/wp-content/uploads/2012/09/1110_Pauper_001.jpg");
+  background-size: cover;
+}
+
+.ranking {
+  color: $stocklight
+}
+
 .columnHead {
   background-color: $stocklight;
   padding: 20px;
@@ -389,6 +407,15 @@ div.disclaimer a:visited {
 
 .fifth {
   width: 15%;
+}
+
+.greystripe {
+  background-color: #eee;
+  padding: 20px;
+}
+
+.whitestripe {
+  padding: 20px;
 }
 
 .pagecontent.stock,
@@ -429,15 +456,6 @@ div.disclaimer a:visited {
   }
 }
 
-.greystripe {
-  background-color: #eee;
-  padding: 20px;
-}
-
-.whitestripe {
-  padding: 20px;
-}
-
 .pagecontent.buy h1 {
   color: #336895;
   text-shadow: 0px 1px 2px #336895;
@@ -470,11 +488,15 @@ MEDIA QUERIES
 
 @media (min-width: 900px) {
 
-  .headercontain,
   .container-fluid,
   .pagecontent.profile,
   .pagecontent.stock {
     width: 900px;
+    margin: 0 auto;
+  }
+
+  .headercontain {
+    width: 834px;
     margin: 0 auto;
   }
 
