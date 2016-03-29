@@ -1,9 +1,6 @@
 app.controller("BuyControl", ["$scope", "$rootScope", "$location", "$http", "StockInfo", "UserInfo", function($scope, $rootScope, $location, $http, stockinfo, userinfo) {
 
 
-  // $scope.quantityOwned = 25;
-  // $scope.initialPrice = 15;
-
   $scope.count = Math.floor($scope.$parent.bankAccount / $scope.lastPrice);
 
   // $scope.totalValue = Math.round(($scope.lastPrice - $scope.initialPrice) * $scope.quantityOwned);
@@ -31,7 +28,8 @@ app.controller("BuyControl", ["$scope", "$rootScope", "$location", "$http", "Sto
 
       stocks.then((response) => {
         console.log(response);
-        $scope.ownedStocks = response.data;
+        $scope.ownedStocks = response;
+        console.log($scope.ownedStocks);
         $location.path('/profile').replace();
       });
 

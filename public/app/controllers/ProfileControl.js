@@ -1,10 +1,13 @@
 app.controller("ProfileControl", ["$scope", "$rootScope", "$location", "$http", "UserInfo", function($scope, $rootScope, $location, $http, userinfo) {
 
 
-  $scope.$parent.userName = userinfo.getUserName();
-  $scope.$parent.bankAccount = userinfo.getUserMoney();
-  $scope.$parent.userId = userinfo.getUserId();
-  $scope.$parent.loggedIn = userinfo.getLoggedIn();
+  let getSession = localStorage.getItem('logged');
+  let checkSession = JSON.parse(getSession);
+
+  $scope.$parent.userName = checkSession.username;
+  $scope.$parent.bankAccount = checkSession.bankaccount;
+  $scope.$parent.userId = checkSession.userid;
+  $scope.$parent.loggedIn = checkSession.loggedin;
 
 
   $http.post('../userstocks', {
@@ -16,20 +19,5 @@ app.controller("ProfileControl", ["$scope", "$rootScope", "$location", "$http", 
       }, function (error) {
       console.log(error);
   });
-
-
-  // var userStocks = stockinfo.setCurrentStockInfo(stockPick);
-
-  // userStocks.then((response) => {
-  //   stockinfo.setCompanyName(response.data.companyname);
-  //   stockinfo.setIndivStock(response.data.indivStock);
-  //   stockinfo.setLastPrice(response.data.lastprice);
-  //   stockinfo.setTodaysHigh(response.data.todayshigh);
-  //   stockinfo.setTodaysLow(response.data.todayslow);
-  //   stockinfo.setTodaysOpen(response.data.todaysopen);
-
-  //   $location.path('/results').replace();
-  // });
-
 
 }]);

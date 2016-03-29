@@ -1,5 +1,7 @@
 app.controller("ResultsControl",
-  ["$scope", "$location", "StockInfo", function($scope, $location, stockinfo) {
+  ["$scope", "$rootScope", "$location", "StockInfo", function($scope, $rootScope, $location, stockinfo) {
+
+    // $rootScope.loggedIn = localStorage.getItem("loggedin");
 
     $scope.$parent.companyName = stockinfo.getCompanyName();
     $scope.$parent.indivStock = stockinfo.getIndivStock();
@@ -7,6 +9,7 @@ app.controller("ResultsControl",
     $scope.$parent.todaysHigh = stockinfo.getTodaysHigh();
     $scope.$parent.todaysLow = stockinfo.getTodaysLow();
     $scope.$parent.todaysOpen = stockinfo.getTodaysOpen();
+
 
 
     $scope.checkLogin = function() {

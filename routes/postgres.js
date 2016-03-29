@@ -55,7 +55,7 @@ pg.schema.hasTable('stocks').then(function(exists) {
 });
 
 
-// Insert new user into table
+// Get all stocks a user owns
 router.post("/userstocks", (req, res) => {
 
   console.log("REQ BODY", req.body);
@@ -76,6 +76,27 @@ router.post("/userstocks", (req, res) => {
 });
 
 
+// Update owned stock value and profit on login
+router.put("/userstocks", (req, res) => {
+
+  console.log("REQ BODY", req.body);
+  // pg('stocks').where('userid', req.body.userid)
+  //   .then(function(data) {
+  //     console.log("GET REQUEST", data.length);
+  //     if (data.length === 0) {
+  //       console.log("GET SERVER ERROR", data);
+  //       res.sendStatus(400);
+  //     } else {
+  //       console.log("GET SERVER SUCCESS", data);
+  //       res.send(data);
+  //     }
+  //   })
+  //   .catch((err) => {
+  //     console.log("GET ERROR", err);
+  //   })
+});
+
+
 // Insert new user into table
 router.post("/postgres", (req, res) => {
 
@@ -86,19 +107,22 @@ router.post("/postgres", (req, res) => {
 });
 
 
-// Insert new user into table
+// Insert new stock info into table
 router.put("/postgres", (req, res) => {
 
   let date = new Date();
   console.log(req.body);
 
   pg("users").where('id', req.body.userid).update({bankAccount: req.body.bankAccount})
+
     .catch((err) => { console.log("ERROR", err) });
 
   pg.insert({stocksymbol: req.body.stocksymbol, stockname: req.body.stockname, quantityowned: req.body.quantityowned, purchaseprice: req.body.purchaseprice, datepurchased: date, userid: req.body.userid}, "id").into("stocks")
+    .then(function(data) {
+      res.sendStatus(200);
+      })
     .catch((err) => { console.log("ERROR", err) });
 
-  res.sendStatus(200);
 });
 
 

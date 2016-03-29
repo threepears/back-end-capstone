@@ -38,6 +38,7 @@
           <div class="collapse navbar-collapse animate-hide" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
               <li ng-show="loggedIn"><span class="userGreeting">Hello, {{userName}}!</span></li>
+              <li ng-show="loggedIn"><a href="#/profile" ng-click="loginWindow()">PROFILE</a></li>
               <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">STOCK SEARCH <span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -45,8 +46,8 @@
                     <div class="form-group">
                       <input type="text" id="autocomplete" class="form-control input- ui-autocomplete-input stockName" ng-model="symbolSearch" placeholder="Enter stock symbol here">
                     </div>
-                    <span class="help-inline hide"><img src="resources/spinner.gif" align="absmiddle" /> loading...</span>
-                    <span class="help-inline hide label label-info"></span>
+                    <!-- <span class="help-inline hide"><img src="resources/spinner.gif" align="absmiddle" /> loading...</span>
+                    <span class="help-inline hide label label-info"></span> -->
                     <button type="submit" class="btn btn-primary searchButton" id="submitQuote" ng-click="getStockInfo();closeNav()">Search</button>
                   </form>
                 </ul>
@@ -105,8 +106,6 @@
     <script src="app/controllers/ResultsControl.js"></script>
     <script src="app/controllers/BuyControl.js"></script>
     <script src="app/controllers/ProfileControl.js"></script>
-    <script src="app/controllers/LoginControl.js"></script>
-    <script src="app/controllers/RegisterControl.js"></script>
     <script src="app/controllers/ScoreboardControl.js"></script>
 
 

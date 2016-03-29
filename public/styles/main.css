@@ -228,7 +228,7 @@ span.userGreeting {
 
 .homeregister {
   display: none;
-  padding: 40px 60px 0 0;
+  padding: 30px 60px 0 0;
   text-align: center; }
 
 .homeregister h3 {
@@ -283,6 +283,7 @@ div.disclaimer a:visited {
 .profilestocks h2 {
   color: #a045b2;
   margin-top: 0;
+  margin-bottom: 0;
   padding-bottom: 20px;
   border-bottom: 1px solid #e7e7e7; }
 
@@ -296,24 +297,30 @@ div.disclaimer a:visited {
   padding-left: 0;
   margin: 0; }
 
+.columnHead {
+  background-color: #e7e7e7;
+  padding: 20px;
+  color: #a045b2;
+  font-weight: bold; }
+
 .tab {
   display: inline-block;
-  padding: 0 10px; }
+  padding: 0 10px 0 0; }
 
 .first {
-  width: 25%; }
+  width: 30%; }
 
 .second {
-  width: 10%; }
+  width: 15%; }
 
 .third {
-  width: 25%; }
+  width: 20%; }
 
 .fourth {
   width: 20%; }
 
 .fifth {
-  width: 20%; }
+  width: 15%; }
 
 .pagecontent.stock,
 .pagecontent.buy {

@@ -32,6 +32,7 @@ app.factory("StockInfo",
           resolve(response.data);
           }, function (error) {
           console.log(error);
+          reject(error);
           })
       });
     },

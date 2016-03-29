@@ -1,18 +1,29 @@
 app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$http", "$route", "StockInfo", "UserInfo", function($scope, $rootScope, $location, $http, $route, stockinfo, userinfo) {
 
+
   $scope.loggedIn = false;
+  $scope.ownedStocks = [];
 
-  // var sessionKey = userinfo.getSessionInfo();
+  let getSession = localStorage.getItem('logged');
 
-  //   sessionKey.then((response) => {
-  //     console.log(response);
-  //     // stockinfo.setCompanyName(response.data.companyname);
-  //   });
+  if (getSession) {
+    let checkSession = JSON.parse(getSession);
+
+    $scope.userName = checkSession.username;
+    $scope.bankAccount = checkSession.bankaccount;
+    $scope.userId = checkSession.userid;
+    $scope.loggedIn = checkSession.loggedin;
+  }
+
 
   $scope.changePage = function(newPath) {
     $location.path(newPath).replace();
   }
 
+
+  /***************************************
+  WORK ON AUTOCOMPLETE FEATURE
+  ***************************************/
 
   // $( "#autocomplete" ).autocomplete({
   //   source: '/stocksearch'
@@ -130,15 +141,6 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$http", "
   };
 
 
-  // $scope.getSession = function() {
-  //   var sessionKey = userinfo.getSessionInfo();
-
-  //   sessionKey.then((response) => {
-  //     console.log(response);
-  //     // stockinfo.setCompanyName(response.data.companyname);
-  //   });
-  // };
-
 
   $scope.closeNav = function() {
     var dropdown_toggle = $(".dropdown-toggle");
@@ -185,6 +187,8 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$http", "
     $scope.bankAccount = "";
     $scope.userId = "";
     $scope.loggedIn = false;
+
+    localStorage.removeItem('logged');
 
     $location.path('/#').replace();
   }

@@ -14,12 +14,13 @@ app.controller("HomeControl",
         userinfo.setUserName(response.data[0].firstname);
         userinfo.setUserMoney(response.data[0].bankAccount);
         userinfo.setUserId(response.data[0].id);
-        userinfo.setLoggedIn(true);
+
+        let logged = { "loggedin": true, "username": response.data[0].firstname, "bankaccount": response.data[0].bankAccount, "userid": response.data[0].id };
+
+        localStorage.setItem('logged', JSON.stringify(logged));
 
         $location.path('/profile').replace();
 
-        // $scope.loggedIn = true;
-        // $scope.userName = response.data[0].firstname;
         }, function (error) {
         console.log("CONTROLLER ERROR", error);
         $scope.loginError = "You have not yet registered. Please register now!";
