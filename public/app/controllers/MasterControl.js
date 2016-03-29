@@ -2,14 +2,21 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$http", "
 
   $scope.loggedIn = false;
 
+  // var sessionKey = userinfo.getSessionInfo();
+
+  //   sessionKey.then((response) => {
+  //     console.log(response);
+  //     // stockinfo.setCompanyName(response.data.companyname);
+  //   });
+
   $scope.changePage = function(newPath) {
     $location.path(newPath).replace();
   }
 
 
-  $( "#autocomplete" ).autocomplete({
-    source: '/stocksearch'
-  });
+  // $( "#autocomplete" ).autocomplete({
+  //   source: '/stocksearch'
+  // });
 
 
  // $(function() {
@@ -121,6 +128,16 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$http", "
       }
     });
   };
+
+
+  // $scope.getSession = function() {
+  //   var sessionKey = userinfo.getSessionInfo();
+
+  //   sessionKey.then((response) => {
+  //     console.log(response);
+  //     // stockinfo.setCompanyName(response.data.companyname);
+  //   });
+  // };
 
 
   $scope.closeNav = function() {

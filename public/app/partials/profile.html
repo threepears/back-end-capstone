@@ -9,7 +9,7 @@
     <div class="profilestocks">
       <h2>Current Portfolio</h2>
       <ul class="stockinfo" >
-        <li ng-class-even="'greystripe'" ng-class-odd="'whitestripe'" ng-repeat="stock in ownedStocks"><span class="blue">{{stock.stockname}}</span> {{stock.quantityowned}} Purchase price: {{stock.purchaseprice | currency}} Current value: {{lastPrice | currency}} Total value: {{totalValue | currency}}</li>
+        <li ng-class-even="'greystripe'" ng-class-odd="'whitestripe'" ng-repeat="stock in ownedStocks"><div class="tab first"><span class="colorAccent">{{stock.stockname}}</span></div><div class="tab second">{{stock.quantityowned}}</div><div class="tab third">Purchase price: {{stock.purchaseprice | currency}}</div><div class="tab fourth">Current value: {{lastPrice | currency}}</div><div class="tab fifth">Total value: {{totalValue | currency}}</div></li>
       </ul>
     </div>
   </div>

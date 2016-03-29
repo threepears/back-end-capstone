@@ -12,6 +12,7 @@ app.controller("ProfileControl", ["$scope", "$rootScope", "$location", "$http", 
     .then(function (response) {
       console.log("SUCCESS", response);
       $scope.ownedStocks = response.data;
+      console.log($scope.ownedStocks);
       }, function (error) {
       console.log(error);
   });

@@ -9,6 +9,17 @@ app.factory("UserInfo",
 
     return {
 
+      getSessionInfo: function(){
+          return $q(function(resolve, reject){
+          $http.get('/')
+            .then(function (response) {
+              resolve(response);
+            }, function (error) {
+              reject(error);
+          })
+        });
+      },
+
       setUserName: function(name){
         userName = name;
       },

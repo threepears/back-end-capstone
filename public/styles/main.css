@@ -185,7 +185,8 @@ span.userGreeting {
   padding-top: 10px; }
 
 .illustration img {
-  width: 100%; }
+  width: 100%;
+  max-height: 400px; }
 
 .row h3 {
   color: #833393;
@@ -295,6 +296,25 @@ div.disclaimer a:visited {
   padding-left: 0;
   margin: 0; }
 
+.tab {
+  display: inline-block;
+  padding: 0 10px; }
+
+.first {
+  width: 25%; }
+
+.second {
+  width: 10%; }
+
+.third {
+  width: 25%; }
+
+.fourth {
+  width: 20%; }
+
+.fifth {
+  width: 20%; }
+
 .pagecontent.stock,
 .pagecontent.buy {
   padding: 20px;
@@ -351,5 +371,18 @@ MEDIA QUERIES
 @media (min-width: 768px) {
   .navbar {
     border-radius: 0; } }
+@media (min-width: 900px) {
+  nav .container-fluid,
+  .navbar-default .container-fluid {
+    padding: 0; }
+
+  .headercontain,
+  .container-fluid,
+  .pagecontent.profile {
+    width: 900px;
+    margin: 0 auto; }
+
+  .pagecontent.home h1 {
+    font-size: 5em; } }
 
 /*# sourceMappingURL=main.css.map */

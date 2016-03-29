@@ -25,7 +25,16 @@ app.controller("BuyControl", ["$scope", "$rootScope", "$location", "$http", "Sto
       userid: $scope.userId} )
     .then(function (response) {
       console.log("SUCCESS", response);
-      $location.path('/profile').replace();
+      console.log($scope.userId);
+      let stocks = stockinfo.getCurrentStockInfo($scope.userId);
+      console.log(stocks);
+
+      stocks.then((response) => {
+        console.log(response);
+        $scope.ownedStocks = response.data;
+        $location.path('/profile').replace();
+      });
+
       }, function (error) {
       console.log(error);
     });
