@@ -9,7 +9,7 @@ const request = require("request");
 // Initializing the Knex library
 const pg = require('knex')({
   client: 'pg',
-  connection: process.env.PG_CONNECTION_STRING || 'postgres://localhost:5432/takingstock',
+  connection: process.env.DATABASE_URL || 'postgres://localhost:5432/takingstock',
   searchPath: 'knex, public'
 });
 
