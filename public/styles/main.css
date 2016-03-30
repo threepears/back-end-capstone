@@ -426,6 +426,9 @@ div.disclaimer a:visited {
   font-style: italic;
   margin-top: 20px; }
 
+.purchase {
+  width: 60%; }
+
 .pagecontent.scoreboard {
   padding: 20px; }
 
