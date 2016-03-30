@@ -164,9 +164,14 @@ input:focus {
   display: inline-block;
   width: 55%; }
 
-.homeheadertext h3 {
+.homeheadertext img {
+  width: 70%;
+  margin-top: 15px; }
+
+.homeheadertext h4 {
   line-height: 1.3em;
-  font-weight: 300; }
+  font-weight: 300;
+  font-size: 1.2em; }
 
 .coloraccent {
   color: #a045b2;

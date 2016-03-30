@@ -6,6 +6,7 @@ app.controller("BuyControl", ["$scope", "$rootScope", "$location", "$http", "Sto
   // $scope.totalValue = Math.round(($scope.lastPrice - $scope.initialPrice) * $scope.quantityOwned);
 
   $scope.makePurchase = function() {
+
     let quantity = $("#stockQuantity").val();
     let cost = (quantity * $scope.lastPrice);
 
