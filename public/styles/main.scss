@@ -14,6 +14,7 @@ body {
   padding: 0;
   border: 0;
   font-family: Helvetica, Tahoma, sans-serif;
+  font-size: 16px;
   height: 100%;
 }
 
@@ -30,20 +31,20 @@ a.btn {
 
   .navbar-right li:hover,
   .navbar-right li:active {
-    background-color: #54215e;
+    background-color: $stockextradark;
   }
 }
 
 .navbar-default,
 footer {
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#a045b2+0,833393+100 */
-  background: #a045b2; /* Old browsers */
-  background: -moz-linear-gradient(top, #a045b2 0%, #833393 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, #a045b2 0%,#833393 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, #a045b2 0%,#833393 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a045b2', endColorstr='#833393',GradientType=0 ); /* IE6-9 */
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/a045b2+0,833393+100 */
+  background: $stockmedium; /* Old browsers */
+  background: -moz-linear-gradient(top, $stockmedium 0%, $stockdark 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, $stockmedium 0%,$stockdark 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, $stockmedium 0%,$stockdark 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$stockmedium', endColorstr='$stockdark',GradientType=0 ); /* IE6-9 */
   color: #fff;
-  text-shadow: 0 1px 2px #833393;
+  text-shadow: 0 1px 2px $stockdark;
   border: 0;
 
   .navbar {
@@ -52,6 +53,7 @@ footer {
 
   .container-fluid {
     padding-left: 30px;
+    font-size: 14px;
   }
 
   .navbar-brand {
@@ -95,14 +97,14 @@ footer {
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:focus,
 .navbar-default .navbar-nav > .open > a:hover {
-  background-color: #54215e;
+  background-color: $stockextradark;
   color: #fff;
 }
 
 span.userGreeting {
   padding: 15px;
   display: block;
-  background-color: #54215e;
+  background-color: $stockextradark;
 }
 
 .dropdown-menu {
@@ -112,7 +114,7 @@ span.userGreeting {
 }
 
 .btn-primary.searchButton {
-  background-color: #a045b2;
+  background-color: $stockmedium;
   border: 0;
   margin-left: 10px;
 }
@@ -120,13 +122,15 @@ span.userGreeting {
 .btn-primary.searchButton:hover,
 .btn-primary.searchButton:active,
 .btn-primary.searchButton:focus {
-  background-color: #833393;
+  background-color: $stockdark;
 }
 
-.form-control:focus {
-  border-color: #a045b2;
+.form-control:focus,
+input:focus {
+  border-color: $stockmedium;
   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(160,69,178,.6);
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(160,69,178,.6);
+  outline: none;
 }
 
 #headerid {
@@ -146,7 +150,7 @@ span.userGreeting {
 
 .pagecontent.home h1 {
   color: #fff;
-  text-shadow: 0px 1px 2px #833393;
+  text-shadow: 0px 1px 2px $stockdark;
   margin: 50px 0 40px;
   font-size: 4em;
 }
@@ -174,13 +178,13 @@ span.userGreeting {
 
 .btn-default:hover,
 .btn-default:active {
-  color: #a045b2;
+  color: $stockmedium;
   background-color: #fff;
   border: 2px solid #fff;
 }
 
 .homeheader {
-  background-color: #a045b2;
+  background-color: $stockmedium;
   color: #fff;
   padding: 20px 40px 40px 60px;
 }
@@ -226,7 +230,7 @@ span.userGreeting {
 }
 
 .row h3 {
-  color: #833393;
+  color: $stockdark;
   padding-left: 5px;
 }
 
@@ -235,7 +239,7 @@ span.userGreeting {
 }
 
 .col-xs-4 i {
-  color: #a045b2;
+  color: $stockmedium;
   font-size: 4em;
 }
 
@@ -258,7 +262,7 @@ span.userGreeting {
 
 .homelogin a.btn.btn-primary,
 .homeregister a.btn.btn-primary {
-  background-color: #54215e;
+  background-color: $stockextradark;
   border: 0;
 }
 
@@ -318,6 +322,21 @@ div.disclaimer a:visited {
   position: relative;
 }
 
+.buyshares {
+  min-height: 550px;
+}
+
+.buyStock {
+  padding: 20px;
+}
+
+.profilesummary img {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  height: 500px;
+}
+
 .profileheader {
   background-color: $stockmedium;
   color: #fff;
@@ -332,6 +351,30 @@ div.disclaimer a:visited {
 
 .profileheader h3 {
   margin: 5px 0 10px 0;
+}
+
+.howmany {
+  width: 50%;
+}
+
+#stockQuantity {
+  display: block;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  padding: 5px 10px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+#stockQuantity:focus {
+  border-color: $stockmedium;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(160,69,178,.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(160,69,178,.6);
+  outline: none;
 }
 
 .profilestocks {
@@ -457,8 +500,8 @@ div.disclaimer a:visited {
 }
 
 .pagecontent.buy h1 {
-  color: #336895;
-  text-shadow: 0px 1px 2px #336895;
+  color: #fff;
+  text-shadow: 0px 1px 2px $stockdark;
   font-size: 3em;
 }
 
@@ -467,6 +510,53 @@ div.disclaimer a:visited {
   font-style: italic;
   margin-top: 20px;
 }
+
+.pagecontent.scoreboard {
+  padding: 20px;
+}
+
+.scoreheader {
+  background-color: $stockmedium;
+  color: #fff;
+  padding: 20px 20px 10px;
+}
+
+.scoreheader h1 {
+  margin-bottom: 20px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.scorelist {
+  background-color: $stocklight;
+  border: 2px solid $stockmedium;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  font-size: 1.6em;
+}
+
+.scorelist .stockinfo {
+  margin-top: 0;
+  padding-right: 40px;
+}
+
+.scoreHead {
+  border-bottom: 1px solid $stockmedium;
+}
+
+.scoretab {
+  width: 33%;
+  display: inline-block;
+  padding: 0 10px 0 0;
+}
+
+// .ranktab {
+
+// }
+
+// .profittab {
+
+// }
 
 footer {
   padding: 20px;
@@ -490,7 +580,9 @@ MEDIA QUERIES
 
   .container-fluid,
   .pagecontent.profile,
-  .pagecontent.stock {
+  .pagecontent.stock,
+  .pagecontent.buy,
+  .pagecontent.scoreboard {
     width: 900px;
     margin: 0 auto;
   }
@@ -498,10 +590,6 @@ MEDIA QUERIES
   .headercontain {
     width: 834px;
     margin: 0 auto;
-  }
-
-  .pagecontent.home h1 {
-    font-size: 5em;
   }
 
 }

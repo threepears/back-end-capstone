@@ -1,7 +1,13 @@
 <section class="pagecontent buy">
-  <h1>{{userName}}</h1>
-  <p>You have {{bankAccount | currency}} left to spend, and so can only afford up to {{count}} shares of this stock, currently priced at {{lastPrice | currency}}.</p>
-  <div class="buyStock">
+  <div class="profilesummary buyshares">
+    <div class="profileheader">
+      <h1>{{userName}}</h1>
+      <h3>How Many Shares Would You Like?</h3>
+      <p class="howmany">You have {{bankAccount | currency}} left to spend, and so can only afford up to {{count}} shares of this stock, currently priced at {{lastPrice | currency}}.</p>
+    </div>
+    <img class="businessman" src="../../images/businessman-question.png" alt="Businessman Questions Decision" />
+
+    <div class="buyStock">
     <p>Please indicate the number of shares of {{companyName}} you would like to purchase:</p>
     <input type="text" id="stockQuantity" />
     <a ng-click="changePage('/profile');makePurchase()" type='button' class='btn btn-warning'>Complete Purchase</a>
