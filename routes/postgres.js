@@ -42,7 +42,9 @@ pg.schema.hasTable('stocks').then(function(exists) {
       table.string('stockname');
       table.integer('quantityowned');
       table.float('purchaseprice');
+      table.float('currentprice');
       table.date('datepurchased');
+      table.float('totalvalue');
       table.integer('userid').references('users.id');
     })
     .then(function (data) {
@@ -113,11 +115,13 @@ router.put("/postgres", (req, res) => {
   let date = new Date();
   console.log(req.body);
 
+  let total = req.body.purchaseprice * req.body.quantityowned;
+
   pg("users").where('id', req.body.userid).update({bankAccount: req.body.bankAccount})
 
     .catch((err) => { console.log("ERROR", err) });
 
-  pg.insert({stocksymbol: req.body.stocksymbol, stockname: req.body.stockname, quantityowned: req.body.quantityowned, purchaseprice: req.body.purchaseprice, datepurchased: date, userid: req.body.userid}, "id").into("stocks")
+  pg.insert({stocksymbol: req.body.stocksymbol, stockname: req.body.stockname, quantityowned: req.body.quantityowned, purchaseprice: req.body.purchaseprice, currentprice: req.body.purchaseprice, datepurchased: date, totalvalue: total, userid: req.body.userid}, "id").into("stocks")
     .then(function(data) {
       res.sendStatus(200);
       })
