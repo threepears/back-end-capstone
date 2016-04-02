@@ -9,10 +9,16 @@ app.controller("BuyControl", ["$scope", "$rootScope", "$location", "$http", "Sto
 
     let quantity = $("#stockQuantity").val();
     let cost = (quantity * $scope.lastPrice);
+    let getSession = localStorage.getItem('logged');
+    let logged = JSON.parse(getSession);
 
     $scope.bankAccount = $scope.bankAccount - cost;
 
     userinfo.setUserMoney($scope.bankAccount);
+
+    logged.bankaccount = $scope.bankAccount;
+
+    localStorage.setItem('logged', JSON.stringify(logged));
 
     $http.put('../postgres', {
       bankAccount: $scope.bankAccount,
@@ -23,7 +29,6 @@ app.controller("BuyControl", ["$scope", "$rootScope", "$location", "$http", "Sto
       userid: $scope.userId} )
     .then(function (response) {
       console.log("SUCCESS", response);
-      console.log($scope.userId);
       let stocks = stockinfo.getCurrentStockInfo($scope.userId);
       console.log(stocks);
 

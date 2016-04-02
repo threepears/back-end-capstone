@@ -1,6 +1,5 @@
 app.controller("ProfileControl", ["$scope", "$rootScope", "$location", "$http", "UserInfo", function($scope, $rootScope, $location, $http, userinfo) {
 
-
   let getSession = localStorage.getItem('logged');
   let checkSession = JSON.parse(getSession);
 

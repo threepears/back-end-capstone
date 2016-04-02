@@ -1,7 +1,6 @@
 app.controller("ResultsControl",
   ["$scope", "$rootScope", "$location", "StockInfo", function($scope, $rootScope, $location, stockinfo) {
 
-    // $rootScope.loggedIn = localStorage.getItem("loggedin");
 
     $scope.$parent.companyName = stockinfo.getCompanyName();
     $scope.$parent.indivStock = stockinfo.getIndivStock();
