@@ -1,12 +1,12 @@
 app.factory("StockInfo",
   ["$http", "$q", function($http, $q) {
 
-    let companyName;
-    let indivStock;
-    let lastPrice;
-    let todaysHigh;
-    let todaysLow;
-    let todaysOpen;
+    var companyName;
+    var indivStock;
+    var lastPrice;
+    var todaysHigh;
+    var todaysLow;
+    var todaysOpen;
 
 
   return {

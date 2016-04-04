@@ -1,7 +1,7 @@
 app.controller("ProfileControl", ["$scope", "$rootScope", "$location", "$http", "UserInfo", function($scope, $rootScope, $location, $http, userinfo) {
 
-  let getSession = localStorage.getItem('logged');
-  let checkSession = JSON.parse(getSession);
+  var getSession = localStorage.getItem('logged');
+  var checkSession = JSON.parse(getSession);
 
   $scope.$parent.userName = checkSession.username;
   $scope.$parent.bankAccount = checkSession.bankaccount;

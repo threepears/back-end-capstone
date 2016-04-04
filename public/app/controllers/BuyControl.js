@@ -7,10 +7,10 @@ app.controller("BuyControl", ["$scope", "$rootScope", "$location", "$http", "Sto
 
   $scope.makePurchase = function() {
 
-    let quantity = $("#stockQuantity").val();
-    let cost = (quantity * $scope.lastPrice);
-    let getSession = localStorage.getItem('logged');
-    let logged = JSON.parse(getSession);
+    var quantity = $("#stockQuantity").val();
+    var cost = (quantity * $scope.lastPrice);
+    var getSession = localStorage.getItem('logged');
+    var logged = JSON.parse(getSession);
 
     $scope.bankAccount = $scope.bankAccount - cost;
 
@@ -29,7 +29,7 @@ app.controller("BuyControl", ["$scope", "$rootScope", "$location", "$http", "Sto
       userid: $scope.userId} )
     .then(function (response) {
       console.log("SUCCESS", response);
-      let stocks = stockinfo.getCurrentStockInfo($scope.userId);
+      var stocks = stockinfo.getCurrentStockInfo($scope.userId);
       console.log(stocks);
 
       stocks.then((response) => {

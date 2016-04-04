@@ -3,7 +3,7 @@ app.controller("HomeControl",
 
 
     $scope.loginUser = function() {
-      let emailAddress = $("#loginEmail").val();
+      var emailAddress = $("#loginEmail").val();
 
       console.log(emailAddress);
 
@@ -15,7 +15,7 @@ app.controller("HomeControl",
         userinfo.setUserMoney(response.data[0].bankAccount);
         userinfo.setUserId(response.data[0].id);
 
-        let logged = { "loggedin": true, "username": response.data[0].firstname, "bankaccount": response.data[0].bankAccount, "userid": response.data[0].id };
+        var logged = { "loggedin": true, "username": response.data[0].firstname, "bankaccount": response.data[0].bankAccount, "userid": response.data[0].id };
 
         localStorage.setItem('logged', JSON.stringify(logged));
 

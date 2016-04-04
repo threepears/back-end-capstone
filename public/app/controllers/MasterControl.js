@@ -4,10 +4,10 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$http", "
   $scope.loggedIn = false;
   $scope.ownedStocks = [];
 
-  let getSession = localStorage.getItem('logged');
+  var getSession = localStorage.getItem('logged');
 
   if (getSession) {
-    let checkSession = JSON.parse(getSession);
+    var checkSession = JSON.parse(getSession);
 
     $scope.userName = checkSession.username;
     $scope.bankAccount = checkSession.bankaccount;
@@ -166,9 +166,9 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$http", "
 
 
   $scope.registerUser = function() {
-    let firstName = $("#firstName").val();
-    let lastName = $("#lastName").val();
-    let emailAddress = $("#registerEmail").val();
+    var firstName = $("#firstName").val();
+    var lastName = $("#lastName").val();
+    var emailAddress = $("#registerEmail").val();
 
     $http.post('../postgres', {
       firstname: firstName,

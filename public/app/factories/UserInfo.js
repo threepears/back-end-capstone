@@ -1,10 +1,10 @@
 app.factory("UserInfo",
   ["$http", "$q", function($http, $q) {
 
-    let userName;
-    let userMoney;
-    let userId;
-    let loggedIn;
+    var userName;
+    var userMoney;
+    var userId;
+    var loggedIn;
 
 
     return {
