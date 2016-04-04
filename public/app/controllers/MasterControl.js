@@ -121,7 +121,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$http", "
 
     console.log(stockResults);
 
-    stockResults.then((response) => {
+    stockResults.then(function(response) {
       console.log(response);
       stockinfo.setCompanyName(response.data.companyname);
       stockinfo.setIndivStock(response.data.indivStock);

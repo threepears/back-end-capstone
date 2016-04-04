@@ -32,7 +32,7 @@ app.controller("BuyControl", ["$scope", "$rootScope", "$location", "$http", "Sto
       var stocks = stockinfo.getCurrentStockInfo($scope.userId);
       console.log(stocks);
 
-      stocks.then((response) => {
+      stocks.then(function(response) {
         console.log(response);
         $scope.ownedStocks = response;
         console.log($scope.ownedStocks);
