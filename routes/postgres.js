@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 const request = require("request");
+const later = require("later");
 
 
 // Initializing the Knex library
@@ -55,6 +56,26 @@ pg.schema.hasTable('stocks').then(function(exists) {
     });
   }
 });
+
+
+
+// define a new schedule
+var textSched = later.parse.text('at 15:15 every weekday');
+// var textSched = later.parse.text('every 5 min');
+
+// set later to use local time
+later.date.localTime();
+
+// execute logTime for each successive occurrence of the text schedule
+var timer = later.setInterval(logTime, textSched);
+
+// function to execute
+function logTime() {
+  console.log(new Date());
+}
+
+// clear the interval timer when you are done
+// timer2.clear();
 
 
 // Get all stocks a user owns
