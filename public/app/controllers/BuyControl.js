@@ -1,13 +1,26 @@
 app.controller("BuyControl", ["$scope", "$rootScope", "$location", "$http", "StockInfo", "UserInfo", function($scope, $rootScope, $location, $http, stockinfo, userinfo) {
 
+  $scope.afford = true;
+  $scope.numberShares = false;
 
   $scope.count = Math.floor($scope.$parent.bankAccount / $scope.lastPrice);
+
+  if ($scope.count < 1) {
+    $scope.afford = false;
+  }
 
   // $scope.totalValue = Math.round(($scope.lastPrice - $scope.initialPrice) * $scope.quantityOwned);
 
   $scope.makePurchase = function() {
 
     var quantity = $("#stockQuantity").val();
+
+    if (quantity > $scope.count) {
+      $scope.numberShares = true;
+      $("#stockQuantity").val('');
+      return;
+    }
+
     var cost = (quantity * $scope.lastPrice);
     var getSession = localStorage.getItem('logged');
     var logged = JSON.parse(getSession);

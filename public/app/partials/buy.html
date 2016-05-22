@@ -1,15 +1,23 @@
 <section class="pagecontent buy">
   <div class="profilesummary buyshares">
-    <div class="profileheader">
+    <div class="profileheader" ng-if="afford">
       <h1>{{userName}}</h1>
       <h3>How Many Shares Would You Like?</h3>
       <p class="howmany">You have {{bankAccount | currency}} left to spend, and so can only afford up to {{count}} shares of this stock, currently priced at {{lastPrice | currency}}.</p>
     </div>
+    <div class="profileheader" ng-hide="afford">
+      <h1>{{userName}}</h1>
+      <h3>You Can't Afford This Stock Purchase</h3>
+      <p class="howmany">We're sorry, but you don't seem to have the funds available to buy this stock. Your account only has {{bankAccount | currency}} left, and this stock costs {{lastPrice | currency}}. Please do another search to find a cheaper option!</p>
+    </div>
     <img class="businessman" src="../../images/businessman-question.png" alt="Businessman Questions Decision" />
 
-    <div class="buyStock">
-    <p class="purchase">Please indicate the number of shares of {{companyName}} you would like to purchase:</p>
-    <input type="text" id="stockQuantity" placeholder="Number of shares" />
-    <a ng-click="makePurchase()" type='button' class='btn btn-warning'>Complete Purchase</a>
+    <div class="buyStock" ng-if="afford">
+      <p class="purchase">Please indicate the number of shares of {{companyName}} you would like to purchase:</p>
+      <input type="text" id="stockQuantity" placeholder="Number of shares" />
+      <a ng-click="makePurchase()" type='button' class='btn btn-warning'>Complete Purchase</a>
+      <div class="buyerror" ng-if="numberShares">You have chosen more shares than you can afford.<br />
+      Please enter another number!</div>
+    </div>
   </div>
 </section>
