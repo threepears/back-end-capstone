@@ -60,8 +60,8 @@ pg.schema.hasTable('stocks').then(function(exists) {
 
 
 // define a new schedule
-var textSched = later.parse.text('at 15:15 every weekday');
-// var textSched = later.parse.text('every 5 min');
+// var textSched = later.parse.text('at 15:15 every weekday');
+var textSched = later.parse.text('every 1 min');
 
 // set later to use local time
 later.date.localTime();
@@ -71,7 +71,41 @@ var timer = later.setInterval(logTime, textSched);
 
 // function to execute
 function logTime() {
-  console.log(new Date());
+  // console.log(new Date());
+  pg('stocks').distinct('stocksymbol').select()
+    .then(function(data) {
+      console.log("GET REQUEST", data.length);
+      if (data.length === 0) {
+        console.log("GET SERVER ERROR", data);
+        res.sendStatus(400);
+      } else {
+        console.log("GET SERVER SUCCESS", data);
+        var stocks = data.map( n => n.stocksymbol );
+
+        var list = [];
+        stocks.forEach(function(each) {
+
+          request('http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol=' + each, (error, response, body) => {
+
+            let result = JSON.parse(body);
+            console.log(each, result.LastPrice);
+
+            pg('stocks').where('stocksymbol', each).update({currentprice: result.LastPrice})
+            .catch((err) => { console.log("ERROR", err) });
+
+            console.log("Wrote to database: ", each);
+            // res.send({
+            //   lastprice: result["LastPrice"],
+            // });
+          });
+        })
+
+        // res.send(data);
+      }
+    })
+    .catch((err) => {
+      console.log("GET ERROR", err);
+    })
 }
 
 // clear the interval timer when you are done
@@ -103,7 +137,13 @@ router.post("/userstocks", (req, res) => {
 router.put("/userstocks", (req, res) => {
 
   console.log("REQ BODY", req.body);
-  // pg('stocks').where('userid', req.body.userid)
+
+  // get all individual stocks in database
+  // look up current price of each stock
+  // update current price of each stock in database
+
+
+  // pg('stocks').distinct('stocksymbol').select()
   //   .then(function(data) {
   //     console.log("GET REQUEST", data.length);
   //     if (data.length === 0) {
@@ -111,7 +151,7 @@ router.put("/userstocks", (req, res) => {
   //       res.sendStatus(400);
   //     } else {
   //       console.log("GET SERVER SUCCESS", data);
-  //       res.send(data);
+  //       // res.send(data);
   //     }
   //   })
   //   .catch((err) => {
