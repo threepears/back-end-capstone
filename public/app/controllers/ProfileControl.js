@@ -14,6 +14,7 @@ app.controller("ProfileControl", ["$scope", "$rootScope", "$location", "$http", 
     .then(function (response) {
       console.log("SUCCESS", response);
       $scope.ownedStocks = response.data;
+      $scope.$parent.portfolioValue = $scope.ownedStocks.reduce((total, val) => { return total + (val.currentprice * val.quantityowned) }, 0 )
       console.log($scope.ownedStocks);
       }, function (error) {
       console.log(error);

@@ -90,16 +90,15 @@ function logTime() {
             let result = JSON.parse(body);
             console.log(each, result.LastPrice);
 
-            pg('stocks').where('stocksymbol', each).update({currentprice: result.LastPrice})
-            .catch((err) => { console.log("ERROR", err) });
+            pg('stocks').where('stocksymbol', each)
+              .select('quantityowned', function(data) {
+                console.log("SELECTDATA", data);
 
-            console.log("Wrote to database: ", each);
-            // res.send({
-            //   lastprice: result["LastPrice"],
-            // });
+              })
+              .update({currentprice: result.LastPrice})
+              .catch((err) => { console.log("ERROR", err) });
           });
         })
-
         // res.send(data);
       }
     })
