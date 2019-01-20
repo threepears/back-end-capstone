@@ -43,10 +43,10 @@ app.controller("BuyControl", ["$scope", "$rootScope", "$location", "$http", "Sto
     .then(function (response) {
       console.log("SUCCESS", response);
       var stocks = stockinfo.getCurrentStockInfo($scope.userId);
-      console.log(stocks);
+      console.log("STOCKS YOU OWN", stocks);
 
       stocks.then(function(response) {
-        console.log(response);
+        console.log("CURRENT STOCKS", response);
         $scope.ownedStocks = response;
         console.log($scope.ownedStocks);
         $location.path('/profile').replace();

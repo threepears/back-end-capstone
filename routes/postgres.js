@@ -81,13 +81,14 @@ function logTime() {
       } else {
         console.log("GET SERVER SUCCESS", data);
         var stocks = data.map( n => n.stocksymbol );
-
+console.log("STOCKS", stocks)
         var list = [];
         stocks.forEach(function(each) {
-
+          console.log("EACH", each)
           request('http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol=' + each, (error, response, body) => {
-
+console.log("BODY", body)
             let result = JSON.parse(body);
+            console.log("RESULT", result)
             console.log(each, result.LastPrice);
             let price = result.LastPrice || 0
 
@@ -174,7 +175,7 @@ router.post("/postgres", (req, res) => {
 router.put("/postgres", (req, res) => {
 
   let date = new Date();
-  console.log(req.body);
+  console.log("PUTTING NEW STOCK IN", req.body);
 
   let total = req.body.purchaseprice * req.body.quantityowned;
 
