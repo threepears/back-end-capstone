@@ -364,21 +364,26 @@ div.disclaimer a:visited {
 
 .tab {
   display: inline-block;
-  padding: 0 10px 0 0; }
+  vertical-align: top;
+  /* padding: 0 10px 0 0; */
+}
 
 .first {
-  width: 30%; }
+  width: 20%; }
 
 .second {
-  width: 15%; }
+  width: 10%; }
 
 .third {
-  width: 20%; }
+  width: 18%; }
 
 .fourth {
-  width: 20%; }
+  width: 18%; }
 
 .fifth {
+  width: 15%; }
+
+ .sixth {
   width: 15%; }
 
 .greystripe {
@@ -387,6 +392,14 @@ div.disclaimer a:visited {
 
 .whitestripe {
   padding: 20px; }
+
+.loss {
+  color: red;
+}
+
+.center {
+  text-align: center;
+}
 
 .pagecontent.stock,
 .pagecontent.buy {

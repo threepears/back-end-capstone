@@ -119,8 +119,6 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$http", "
 
     var stockResults = stockinfo.setCurrentStockInfo(stockPick.val());
 
-    console.log(stockResults);
-
     stockResults.then(function(response) {
       console.log(response);
       stockinfo.setCompanyName(response.data.companyname);

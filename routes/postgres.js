@@ -89,13 +89,14 @@ function logTime() {
 
             let result = JSON.parse(body);
             console.log(each, result.LastPrice);
+            let price = result.LastPrice || 0
 
             pg('stocks').where('stocksymbol', each)
               .select('quantityowned', function(data) {
                 console.log("SELECTDATA", data);
 
               })
-              .update({currentprice: result.LastPrice})
+              .update({currentprice: price})
               .catch((err) => { console.log("ERROR", err) });
           });
         })
