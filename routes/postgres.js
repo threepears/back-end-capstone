@@ -81,26 +81,32 @@ function logTime() {
       } else {
         console.log("GET SERVER SUCCESS", data);
         var stocks = data.map( n => n.stocksymbol );
-console.log("STOCKS", stocks)
-        var list = [];
+
         stocks.forEach(function(each) {
-          console.log("EACH", each)
-          request('http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol=' + each, (error, response, body) => {
-console.log("BODY", body)
-            let result = JSON.parse(body);
-            console.log("RESULT", result)
-            console.log(each, result.LastPrice);
-            let price = result.LastPrice || 0
+          console.log("EACH", 'https://api.iextrading.com/1.0/stock/' + each + '/quote')
+          request('https://api.iextrading.com/1.0/stock/' + each + '/quote', (error, response, body) => {
+            let price
+
+            if(body !== "Unknown symbol") {
+              let result = JSON.parse(body);
+              console.log("RESULT", result)
+              console.log(each, result.latestPrice);
+              price = result.latestPrice || 0
+              console.log("CURRENT PRICE", price)
+            } else {
+              price = 0
+            }
 
             pg('stocks').where('stocksymbol', each)
               .select('quantityowned', function(data) {
                 console.log("SELECTDATA", data);
-
               })
               .update({currentprice: price})
               .catch((err) => { console.log("ERROR", err) });
           });
         })
+        // 'http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol=' + each
+        // 'http://www.alphavantage.co/query?function=GLOBAL_QUOTE&apikey=ARC1Z4SZBAGRITSW&symbol='
         // res.send(data);
       }
     })
