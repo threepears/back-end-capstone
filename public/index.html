@@ -38,7 +38,7 @@
           <div class="collapse navbar-collapse animate-hide" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
               <li ng-show="loggedIn"><span class="userGreeting">Hello, {{userName}}!</span></li>
-              <li ng-show="loggedIn"><a href="#/profile" ng-click="loginWindow()">PROFILE</a></li>
+              <li ng-show="loggedIn"><a href="#!/profile" ng-click="loginWindow()">PROFILE</a></li>
               <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">STOCK SEARCH <span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -52,10 +52,10 @@
                   </form>
                 </ul>
               </li>
-              <li><a href="#/scoreboard">SCOREBOARD</a></li>
+              <li><a href="#!/scoreboard">SCOREBOARD</a></li>
 
               <li ng-show="loggedIn" class="menuRight" ng-click="logout()"><a>LOGOUT</a></li>
-              <li ng-hide="loggedIn" class="menuRight"><a href="#/" ng-click="loginWindow()">LOGIN</a></li>
+              <li ng-hide="loggedIn" class="menuRight"><a href="#!/" ng-click="loginWindow()">LOGIN</a></li>
             </ul>
           </div>
         </div>
