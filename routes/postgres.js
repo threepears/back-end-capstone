@@ -81,10 +81,9 @@ function logTime() {
       } else {
         console.log("GET SERVER SUCCESS", data);
         var stocks = data.map( n => n.stocksymbol );
-
+        
         stocks.forEach(function(each) {
-          console.log("EACH", 'https://api.iextrading.com/1.0/stock/' + each + '/quote')
-          request('https://api.iextrading.com/1.0/stock/' + each + '/quote', (error, response, body) => {
+          request('https://cloud.iexapis.com/stable/stock/' + each + '/quote?token=' + process.env.API_KEY, (error, response, body) => {
             let price
 
             if(body !== "Unknown symbol") {
