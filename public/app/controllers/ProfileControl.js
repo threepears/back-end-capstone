@@ -10,8 +10,6 @@ app.controller("ProfileControl", ["$scope", "$rootScope", "$location", "$http", 
   console.log("SESSION USERNAME", $scope.$parent.userName)
   console.log("SESSION BANK ACCOUNT", $scope.$parent.bankAccount)
   console.log("SESSION LOGGED IN", $scope.$parent.loggedIn)
-  console.log("DATABASE URL", process.env.DATABASE_URL)
-  console.log("API KEY", process.env.API_KEY)
 
   $http.post('../userstocks', {
       userid: $scope.$parent.userId } )

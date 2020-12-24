@@ -5,7 +5,7 @@ app.controller("HomeControl",
     $scope.loginUser = function() {
       var emailAddress = $("#loginEmail").val();
 
-      console.log(emailAddress);
+      console.log("LOGIN USER EMAIL", emailAddress);
 
       $http.post('../redisdata', {
         email: emailAddress } )

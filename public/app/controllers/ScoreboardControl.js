@@ -4,7 +4,7 @@ app.controller("ScoreboardControl",
     var getScoringRank = currentProfit => {
       switch(currentProfit) {
         case currentProfit < 100:
-          return "Pauper";
+          return ({ rankName: "Pauper", rankLink: ""});
         case currentProfit < 1000:
           return "Working Man";
         case currentProfit < 1000:

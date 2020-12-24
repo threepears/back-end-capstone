@@ -6,7 +6,8 @@ const router = express.Router();
 const request = require("request");
 // const { request } = require("gaxios");
 const later = require("later");
-
+console.log("POSTGRES DATABASE URL", process.env.DATABASE_URL)
+console.log("POSTGRES API KEY", process.env.API_KEY)
 
 // Initializing the Knex library
 const pg = require('knex')({
