@@ -6,8 +6,7 @@ const router = express.Router();
 const request = require("request");
 // const { request } = require("gaxios");
 const later = require("later");
-console.log("POSTGRES DATABASE URL", process.env.DATABASE_URL)
-console.log("POSTGRES API KEY", process.env.API_KEY)
+const API_KEY = process.env.API_KEY
 
 // Initializing the Knex library
 const pg = require('knex')({
@@ -88,7 +87,7 @@ function logTime() {
           // const body = await request({
           //   url: 'https://cloud.iexapis.com/stable/stock/' + each + '/quote?token=sk_1c0ceff7fedd40c69e6c6276bf736ec5'
           // });
-          request('https://cloud.iexapis.com/stable/stock/' + each + '/quote?token=sk_1c0ceff7fedd40c69e6c6276bf736ec5', (error, response, body) => {
+          request('https://cloud.iexapis.com/stable/stock/' + each + '/quote?token=' + API_KEY, (error, response, body) => {
             // request({ url: 'https://cloud.iexapis.com/stable/stock/' + each + '/quote?token=sk_1c0ceff7fedd40c69e6c6276bf736ec5' })
             // .then(function(body) {
             let price
@@ -174,7 +173,7 @@ router.post("/userstocks", (req, res) => {
       } else {
         data.map(({ stocksymbol }) => {
           console.log("STOCK?", stocksymbol);
-          request('https://cloud.iexapis.com/stable/stock/' + stocksymbol + '/quote/latestPrice?token=sk_1c0ceff7fedd40c69e6c6276bf736ec5', (_error, _response, body) => {
+          request('https://cloud.iexapis.com/stable/stock/' + stocksymbol + '/quote/latestPrice?token=' + API_KEY, (_error, _response, body) => {
             let newPrice
             console.log("BODY IN LOGIN", body)
             if(body !== "Unknown symbol") {
