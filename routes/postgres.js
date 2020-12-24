@@ -84,12 +84,7 @@ function logTime() {
         var stocks = data.map( n => n.stocksymbol );
 
         stocks.forEach(function(each) {
-          // const body = await request({
-          //   url: 'https://cloud.iexapis.com/stable/stock/' + each + '/quote?token=sk_1c0ceff7fedd40c69e6c6276bf736ec5'
-          // });
           request('https://cloud.iexapis.com/stable/stock/' + each + '/quote?token=' + API_KEY, (error, response, body) => {
-            // request({ url: 'https://cloud.iexapis.com/stable/stock/' + each + '/quote?token=sk_1c0ceff7fedd40c69e6c6276bf736ec5' })
-            // .then(function(body) {
             let price
             console.log("STOCKS FOR EACH", body)
             if(body !== "Unknown symbol") {

@@ -4,10 +4,8 @@ const express = require('express');
 const router = express.Router();
 const request = require("request");
 
-// ' + process.env.API_KEY
-
 router.get("/stock/:stock", (req, res) => {
-  request('https://cloud.iexapis.com/stable/stock/' + req.params.stock + '/quote?token=sk_1c0ceff7fedd40c69e6c6276bf736ec5', (error, response, body) => {
+  request('https://cloud.iexapis.com/stable/stock/' + req.params.stock + '/quote?token=' + process.env.API_KEY, (error, response, body) => {
 console.log("NEW API BODYYYYY", body);
     let result = JSON.parse(body);
     console.log("RESULTTT", result);
