@@ -36,6 +36,14 @@ app.factory("UserInfo",
         return userMoney;
       },
 
+      setUserProfit: function(amount){
+        userProfit = amount;
+      },
+
+      getUserProfit: function(){
+        return userProfit;
+      },
+
       setUserId: function(id){
         userId = id;
       },

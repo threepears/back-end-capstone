@@ -12,12 +12,12 @@ app.factory("StockInfo",
   return {
 
     setCurrentStockInfo: function(stockName) {
-        return $q(function(resolve, reject){
-        $http.get('/stock/' + stockName)
-          .then(function (response) {
-            resolve(response);
-          }, function (error) {
-            reject(error);
+      return $q(function(resolve, reject){
+      $http.get('/stock/' + stockName)
+        .then(function (response) {
+          resolve(response);
+        }, function (error) {
+          reject(error);
         })
       });
     },
@@ -28,7 +28,7 @@ app.factory("StockInfo",
       $http.post('../userstocks', {
         userid: userId } )
         .then(function (response) {
-          console.log("SUCCESS", response);
+          console.log("CURRENT STOCK INFO SUCCESS", response);
           resolve(response.data);
           }, function (error) {
           console.log(error);

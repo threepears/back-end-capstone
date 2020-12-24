@@ -7,7 +7,7 @@
   <div class="scorelist">
     <ul class="stockinfo">
       <li class="columnHead scoreHead"><div class="scoretab"><span class="colorAccent">Player</span></div><div class="scoretab">Player Level</div><div class="scoretab">Profits To Date</div></li>
-      <li ng-class-even="'greystripe'" ng-class-odd="'whitestripe'" ng-repeat="folks in richestFolks"><div class="scoretab">{{ $index + 1 }}. <span class="colorAccent">{{folks.name}}</span></div><div class="scoretab">{{folks.rank}}</div><div class="scoretab">{{folks.profits | currency}}</div></li>
+      <li ng-class-even="'greystripe'" ng-class-odd="'whitestripe'" ng-repeat="folks in richestFolks"><div class="scoretab">{{ $index + 1 }}. <span class="colorAccent">{{folks.firstname}}</span></div><div class="scoretab">{{folks.rank}}</div><div class="scoretab">{{folks.currentProfit | currency}}</div></li>
     </ul>
   </div>
 

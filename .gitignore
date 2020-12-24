@@ -34,3 +34,11 @@ node_modules
 
 # Public jQuery install
 public/vendor
+public/.DS_Store
+public/app/.DS_Store
+public/images/.DS_Store
+public/styles/.sass-cache/
+
+# Miscellaneous
+.DS_Store
+dump.rdb

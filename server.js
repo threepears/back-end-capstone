@@ -10,7 +10,8 @@ const routes = require("./routes/");
 const bodyparser = require("body-parser");
 
 const PORT = process.env.PORT || 3000;
-
+console.log("DATABASE URL", process.env.DATABASE_URL)
+console.log("API KEY", process.env.API_KEY)
 
 // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
 app.all('*', function(req, res, next) {

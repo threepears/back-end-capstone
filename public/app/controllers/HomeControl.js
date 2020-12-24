@@ -13,10 +13,17 @@ app.controller("HomeControl",
         console.log("CONTROLLER SUCCESS", response);
         userinfo.setUserName(response.data[0].firstname);
         userinfo.setUserMoney(response.data[0].bankAccount);
+        userinfo.setUserProfit(response.data[0].currentProfit)
         userinfo.setUserId(response.data[0].id);
 
-        var logged = { "loggedin": true, "username": response.data[0].firstname, "bankaccount": response.data[0].bankAccount, "userid": response.data[0].id };
-
+        var logged = { 
+          "loggedin": true, 
+          "username": response.data[0].firstname, 
+          "bankaccount": response.data[0].bankAccount, 
+          "currentprofit": response.data[0].currentProfit, 
+          "userid": response.data[0].id 
+        };
+        console.log("LOGGED IN??", logged);
         localStorage.setItem('logged', JSON.stringify(logged));
 
         $location.path('/profile').replace();

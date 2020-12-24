@@ -4,50 +4,43 @@ const express = require('express');
 const router = express.Router();
 const request = require("request");
 
+// ' + process.env.API_KEY
 
 router.get("/stock/:stock", (req, res) => {
-  const stock = req.params.stock;
-  console.log("Stock name>>>>>>", stock);
-
-  request('http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol=' + stock, (error, response, body) => {
-
-    let str = '';
-    let result;
-
-    result = JSON.parse(body);
-
-    res.send({
-      indivStock: stock,
-      companyname: result["Name"],
-      lastprice: result["LastPrice"],
-      todaysopen: result["Open"],
-      todayshigh: result["High"],
-      todayslow: result["Low"]
-    });
-  });
-});
-
-
-router.get("/stocksearch", (req, res) => {
-
-  const stock = req.query.term;
-
-  request('http://dev.markitondemand.com/Api/v2/Lookup/json?input=' + stock, (error, response, body) => {
-
-    console.log("API RESPONSE", response);
-
+  request('https://cloud.iexapis.com/stable/stock/' + req.params.stock + '/quote?token=sk_1c0ceff7fedd40c69e6c6276bf736ec5', (error, response, body) => {
+console.log("NEW API BODYYYYY", body);
     let result = JSON.parse(body);
-
-    console.log("JSON RESULT", result);
-
-    let thingy = [];
-    result.forEach(thing => {
-      thingy.push(thing.Name);
+    console.log("RESULTTT", result);
+    res.send({
+      indivStock: req.params.stock,
+      companyname: result["companyName"],
+      lastprice: result["latestPrice"],
+      todaysopen: result["open"],
+      todayshigh: result["high"],
+      todayslow: result["low"]
     });
-
-    res.send(thingy);
   });
 });
+
+// For use with AutoComplete feature in MasterControl.js
+// router.get("/stocksearch", (req, res) => {
+
+//   const stock = req.query.term;
+
+//   request('http://dev.markitondemand.com/Api/v2/Lookup/json?input=' + stock, (error, response, body) => {
+//     console.log("MARKITONDEMAND API RESPONSE", response);
+
+//     let result = JSON.parse(body);
+//     console.log("JSON RESULT", result);
+
+//     let thingy = [];
+//     result.forEach(thing => {
+//       thingy.push(thing.Name);
+//     });
+
+//     res.send(thingy);
+//   });
+// });
 
 
 module.exports = router;

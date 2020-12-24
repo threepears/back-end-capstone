@@ -113,14 +113,12 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$http", "
 
 
   $scope.getStockInfo = function() {
+    console.log("GET STOCK INFO")
     var stockPick = $(".stockName");
-
-    console.log(stockPick.val());
-
     var stockResults = stockinfo.setCurrentStockInfo(stockPick.val());
 
     stockResults.then(function(response) {
-      console.log(response);
+      console.log("SEARCH RESPONSE", response);
       stockinfo.setCompanyName(response.data.companyname);
       stockinfo.setIndivStock(response.data.indivStock);
       stockinfo.setLastPrice(response.data.lastprice);
@@ -141,6 +139,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$http", "
 
 
   $scope.closeNav = function() {
+    console.log("CLOSE NAV")
     var dropdown_toggle = $(".dropdown-toggle");
 
     if ($('.dropdown-menu').is(':visible')) {
@@ -157,6 +156,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$http", "
 
 
   $scope.registerWindow = function() {
+    console.log("REGISTER WINDOW")
     $(".homeheadertext").css("display", "none");
     $(".homelogin").css("display", "none");
     $(".homeregister").css({"display": "inline-block", "width": "55%"});
@@ -164,6 +164,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$http", "
 
 
   $scope.registerUser = function() {
+    console.log("REGISTER USER")
     var firstName = $("#firstName").val();
     var lastName = $("#lastName").val();
     var emailAddress = $("#registerEmail").val();
@@ -173,7 +174,7 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$http", "
       lastname: lastName,
       email: emailAddress } )
     .then(function (response) {
-      console.log("SUCCESS", response);
+      console.log("REGISTER USER SUCCESS", response);
       }, function (error) {
       console.log(error);
     });
@@ -181,10 +182,12 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$http", "
 
 
   $scope.logout = function() {
+    console.log("LOGGGING OUTTTT", $scope.portfolioValue)
     $scope.userName = "";
     $scope.bankAccount = "";
     $scope.userId = "";
     $scope.loggedIn = false;
+    $scope.portfolioValue = 0;
 
     localStorage.removeItem('logged');
 

@@ -56,7 +56,7 @@ const session = require('express-session')
 const pg = require('knex')({
   client: 'pg',
   connection: process.env.DATABASE_URL || 'postgres://localhost:5432/takingstock',
-  searchPath: 'knex, public'
+  searchPath: ['knex', 'public'] // 'knex, public'
 });
 
 router.post("/redisdata", (req, res) => {
