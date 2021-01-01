@@ -5,10 +5,11 @@ const router = express.Router();
 const request = require("request");
 
 router.get("/stock/:stock", (req, res) => {
-  request('https://cloud.iexapis.com/stable/stock/' + req.params.stock + '/quote?token=' + process.env.API_KEY, (error, response, body) => {
-console.log("NEW API BODYYYYY", body);
+  request('https://cloud.iexapis.com/stable/stock/' + req.params.stock + '/quote?token=' + process.env.API_KEY, (_error, _response, body) => {  
+    console.log("NEW API BODYYYYY", body);
     let result = JSON.parse(body);
-    console.log("RESULTTT", result);
+    console.log("GET STOCK PROPS", result);
+
     res.send({
       indivStock: req.params.stock,
       companyname: result["companyName"],

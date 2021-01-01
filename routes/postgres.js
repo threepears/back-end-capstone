@@ -71,48 +71,64 @@ var textSched = later.parse.text('every 1 min');
 // var timer =
 // later.setInterval(logTime, textSched);
 
-// function to execute
-function logTime() {
+const getDistinctStocks = () => 
   pg('stocks').distinct('stocksymbol').select()
-    .then(function(data) {
-      console.log("GET REQUEST LOG TIME", data.length);
-      if (data.length === 0) {
-        console.log("GET SERVER ERROR", data);
-        res.sendStatus(400);
-      } else {
-        console.log("GET SERVER SUCCESS", data);
-        var stocks = data.map( n => n.stocksymbol );
 
-        stocks.forEach(function(each) {
-          request('https://cloud.iexapis.com/stable/stock/' + each + '/quote?token=' + API_KEY, (error, response, body) => {
+const getStockRow = stock => 
+  pg('stocks').where('stocksymbol', stock)
+
+const updateStockInfo = (price, rowData) => 
+  pg('stocks')
+    .where('id', rowData.id)
+    .update({currentprice: price, totalvalue: price * rowData.quantityowned})
+
+// function to execute
+// function logTime() {
+router.patch("/updatestocks", async (_req, res) => {
+  try {
+    const distinctStocks = await getDistinctStocks()
+
+    if (distinctStocks === 0) {
+      return res.send(400).status('No stocks found to update.');
+    } else {
+      const stocks = distinctStocks.map(st => st.stocksymbol)
+      let allStocks = []
+
+      stocks.forEach((each, stocksIndex) => {
+        request('https://cloud.iexapis.com/stable/stock/' + each + '/quote?token=' + API_KEY, async (_error, _response, body) => {
+          try {
             let price
-            console.log("STOCKS FOR EACH", body)
-            if(body !== "Unknown symbol") {
-              let result = JSON.parse(body);
-              console.log("RESULT", result)
-              console.log("EACH PRICE", each, result.latestPrice);
+  
+            if (body !== "Unknown symbol") {
+              let allStockRows = []
+              let result = JSON.parse(body)
               price = result.latestPrice || 0
-            } else {
-              price = 0
-            }
 
-            pg('stocks').where('stocksymbol', each)
-              .select('quantityowned', function(data) {
-                console.log("SELECTDATA", data);
+              const stockRow = await getStockRow(each)
+
+              stockRow.forEach(async (row, stockRowIndex) => {
+                let updated = await updateStockInfo(price, row)
+                updated && allStockRows.push(stockRowIndex)
+
+                if (stockRow.length === allStockRows.length) {
+                  allStocks.push(stocksIndex)
+                }
+
+                if (allStocks.length === stocks.length) {
+                  res.sendStatus(200)
+                }
               })
-              .update({currentprice: price})
-              .catch((err) => { console.log("ERROR", err) });
-          });
+            }
+          } catch (error) {
+            console.error("FOR EACH STOCK UPDATE ERROR", error)
+          }
         })
-        // 'http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol=' + each
-        // 'http://www.alphavantage.co/query?function=GLOBAL_QUOTE&apikey=ARC1Z4SZBAGRITSW&symbol='
-        res.send(data);
-      }
-    })
-    .catch((err) => {
-      console.log("GET ERROR", err);
-    })
-}
+      })
+    }
+  } catch (error) {
+    console.error("UPDATE STOCKS ERROR", error)
+  }
+});
 
 // clear the interval timer when you are done
 // timer2.clear();
@@ -127,7 +143,7 @@ router.get("/scoreboard", (req, res) => {
         console.log("GET SERVER ERROR", data);
         res.sendStatus(400);
       } else {
-        console.log("GET SERVER SUCCESS", data);
+        console.log("SCOREBOARD - GET SERVER SUCCESS", data);
         res.send(data);
       }
     })
@@ -148,7 +164,7 @@ router.get("/userstocks", (req, res) => {
         console.log("GET SERVER ERROR", data);
         res.sendStatus(400);
       } else {
-        console.log("GET SERVER SUCCESS", data);
+        console.log("GET USERSTOCKS - GET SERVER SUCCESS", data);
         res.send(data);
       }
     })
@@ -157,77 +173,16 @@ router.get("/userstocks", (req, res) => {
     })
 });
 
-// Update owned stock value and profit on login
+// Get a user's owned stock info on login
 router.post("/userstocks", (req, res) => {
   let userId = req.body.userid;
-  console.log("USERSTOCKS USER ID", userId)
-  return pg('stocks').select('stocksymbol').where('userid', userId)
-    .then(function(data) {
-      if (data === undefined || data.length == 0) { 
-        res.send(data); 
-      } else {
-        data.map(({ stocksymbol }) => {
-          console.log("STOCK?", stocksymbol);
-          request('https://cloud.iexapis.com/stable/stock/' + stocksymbol + '/quote/latestPrice?token=' + API_KEY, (_error, _response, body) => {
-            let newPrice
-            console.log("BODY IN LOGIN", body)
-            if(body !== "Unknown symbol") {
-              newPrice = JSON.parse(body);
-            } 
 
-            pg('stocks').where('stocksymbol', stocksymbol)
-              .update('currentprice', newPrice)
-              .then(function() {
-                console.log("HEY DATAAAAAA", data)
-                pg('stocks').where('userid', userId)
-                  .then(function(data) {
-                    let currentProfit = data.reduce((sum, stock) => {
-                      let { currentprice, purchaseprice, quantityowned } = stock;
-                      let profit = (currentprice - purchaseprice) * quantityowned;
-                      return sum + profit;
-                    }, 0)
-                    console.log("CURRENT PROFIT", currentProfit, userId)
-                    pg('users').where('id', userId)
-                      .update('currentProfit', currentProfit)
-                      .then(function() {
-                        console.log("ONE FINAL CHECK OF USER ID", userId)
-                        pg('stocks').where('userid', userId) 
-                          .then(function(data) {
-                            console.log("GET REQUEST", data.length);
-                            if (data.length === 0) {
-                              console.log("GET SERVER ERROR", data);
-                              res.sendStatus(400);
-                            } else {
-                              console.log("GET SERVER SUCCESS", data);
-                              res.send(data);
-                            }
-                          }).catch((err) => {
-                            console.log("RES SEND ERROR", err);
-                          })
-                      })
-                  })
-              })
-          })
-        })
-      }
+  return pg('stocks').where('userid', userId)
+    .then(function(data) {
+        res.send(data); 
     }).catch((err) => {
       console.log("GET ERROR", err);
     })
-
-  // pg('stocks').distinct('stocksymbol').select()
-  //   .then(function(data) {
-  //     console.log("GET REQUEST", data.length);
-  //     if (data.length === 0) {
-  //       console.log("GET SERVER ERROR", data);
-  //       res.sendStatus(400);
-  //     } else {
-  //       console.log("GET SERVER SUCCESS", data);
-  //       res.send(data);
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.log("GET ERROR", err);
-  //   })
 });
 
 
