@@ -15,6 +15,9 @@ const pg = require('knex')({
   searchPath: ['knex', 'public']
 });
 
+pg.schema.dropTable('users');
+pg.schema.dropTable('stocks');
+
 
 // Create tables if they don't already exist
 pg.schema.hasTable('users').then(function(exists) {
