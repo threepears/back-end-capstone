@@ -15,10 +15,6 @@ const pg = require('knex')({
   searchPath: ['knex', 'public']
 });
 
-pg.schema.dropTable('users');
-pg.schema.dropTable('stocks');
-
-
 // Create tables if they don't already exist
 pg.schema.hasTable('users').then(function(exists) {
   if (!exists) {
@@ -90,13 +86,13 @@ const updateStockInfo = (price, rowData) =>
 router.patch("/updatestocks", async (_req, res) => {
   try {
     const distinctStocks = await getDistinctStocks()
-
+    console.log("DISTINCT STOCKS", distinctStocks)
     if (distinctStocks === 0) {
       return res.send(400).status('No stocks found to update.');
     } else {
       const stocks = distinctStocks.map(st => st.stocksymbol)
       let allStocks = []
-
+      console.log("STONKS", stocks)
       stocks.forEach((each, stocksIndex) => {
         request('https://cloud.iexapis.com/stable/stock/' + each + '/quote?token=' + API_KEY, async (_error, _response, body) => {
           try {
@@ -106,7 +102,7 @@ router.patch("/updatestocks", async (_req, res) => {
               let allStockRows = []
               let result = JSON.parse(body)
               price = result.latestPrice || 0
-              console.log("JSON PARSE BODY", result)
+              // console.log("JSON PARSE BODY", result)
               const stockRow = await getStockRow(each)
 
               stockRow.forEach(async (row, stockRowIndex) => {
