@@ -100,9 +100,10 @@ router.patch("/updatestocks", async (_req, res) => {
             console.log("GETTING STOCKS BODY CHECK", body)
             if (body !== "Unknown symbol" || body !== "Not found") {
               let allStockRows = []
+              console.log("GETTING READY TO PARSE", body)
               let result = JSON.parse(body)
+              console.log("WE DONE PARSED THAT", result)
               price = result.latestPrice || 0
-              // console.log("JSON PARSE BODY", result)
               const stockRow = await getStockRow(each)
 
               stockRow.forEach(async (row, stockRowIndex) => {
