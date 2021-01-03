@@ -97,7 +97,7 @@ router.patch("/updatestocks", async (_req, res) => {
         request('https://cloud.iexapis.com/stable/stock/' + each + '/quote?token=' + API_KEY, async (_error, _response, body) => {
           try {
             let price
-            console.log("GETTING STOCKS BODY", body)
+            console.log("GETTING STOCKS BODY CHECK", body)
             if (body !== "Unknown symbol" || body !== "Not found") {
               let allStockRows = []
               let result = JSON.parse(body)
