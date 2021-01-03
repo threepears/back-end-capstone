@@ -98,7 +98,7 @@ router.patch("/updatestocks", async (_req, res) => {
           try {
             let price
             console.log("GETTING STOCKS BODY", body)
-            if (body !== "Unknown symbol") {
+            if (body !== "Unknown symbol" || body !== "Not found") {
               let allStockRows = []
               let result = JSON.parse(body)
               price = result.latestPrice || 0
