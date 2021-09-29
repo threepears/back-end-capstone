@@ -1,25 +1,31 @@
 app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$http", "$route", "StockInfo", "UserInfo", function($scope, $rootScope, $location, $http, $route, stockinfo, userinfo) {
 
-
   $scope.loggedIn = false;
   $scope.ownedStocks = [];
+  $scope.hasError = false;
 
   var getSession = localStorage.getItem('logged');
 
   if (getSession) {
     var checkSession = JSON.parse(getSession);
 
-    $scope.userName = checkSession.username;
-    $scope.bankAccount = checkSession.bankaccount;
-    $scope.userId = checkSession.userid;
-    $scope.loggedIn = checkSession.loggedin;
+    $scope.userName = checkSession.userName;
+    $scope.bankAccount = checkSession.bankAccount;
+    $scope.userId = checkSession.userId;
+    $scope.loggedIn = checkSession.loggedIn;
   }
 
+  $scope.setError = function(bool) {
+    $scope.hasError = bool;
+  }
 
   $scope.changePage = function(newPath) {
-    $location.path(newPath).replace();
+    if ($location.path() === `/${newPath}`) {
+      $route.reload();
+    } else {
+      $location.path(`/${newPath}`).replace();
+    }
   }
-
 
   /***************************************
   WORK ON AUTOCOMPLETE FEATURE
@@ -111,35 +117,33 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$http", "
   //   minLength: 2
   // });
 
-
   $scope.getStockInfo = function() {
-    console.log("GET STOCK INFO")
     var stockPick = $(".stockName");
     var stockResults = stockinfo.setCurrentStockInfo(stockPick.val());
-
-    stockResults.then(function(response) {
-      console.log("SEARCH RESPONSE", response);
-      stockinfo.setCompanyName(response.data.companyname);
-      stockinfo.setIndivStock(response.data.indivStock);
-      stockinfo.setLastPrice(response.data.lastprice);
-      stockinfo.setTodaysHigh(response.data.todayshigh);
-      stockinfo.setTodaysLow(response.data.todayslow);
-      stockinfo.setTodaysOpen(response.data.todaysopen);
-
-      stockPick.val("");
-
-      if ($location.path() === '/results') {
-        $route.reload();
-      } else {
-        $location.path('/results').replace();
-      }
-    });
+    
+    stockResults
+      .then(function({data}) {
+        stockinfo.setCompanyName(data.companyname);
+        stockinfo.setIndivStock(data.indivStock);
+        stockinfo.setLastPrice(data.lastprice);
+        stockinfo.setTodaysHigh(data.todayshigh);
+        stockinfo.setTodaysLow(data.todayslow);
+        stockinfo.setTodaysOpen(data.todaysopen);
+      }).then(function() {
+        stockinfo.clearErrorMessage();
+        $scope.setError(false);
+        stockPick.val("");
+        $scope.changePage('results');
+      }).catch((error) => { 
+        stockinfo.setIndivStock(stockPick.val());
+        stockinfo.setErrorMessage(error.data);
+        $scope.setError(true);
+        stockPick.val("");
+        $scope.changePage('results');
+      });
   };
 
-
-
   $scope.closeNav = function() {
-    console.log("CLOSE NAV")
     var dropdown_toggle = $(".dropdown-toggle");
 
     if ($('.dropdown-menu').is(':visible')) {
@@ -147,42 +151,34 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$http", "
     }
   };
 
-
   $scope.loginWindow = function() {
     $(".homeheadertext").css("display", "none");
     $(".homeregister").css("display", "none");
     $(".homelogin").css({"display": "inline-block", "width": "55%"});
   };
 
-
   $scope.registerWindow = function() {
-    console.log("REGISTER WINDOW")
     $(".homeheadertext").css("display", "none");
     $(".homelogin").css("display", "none");
     $(".homeregister").css({"display": "inline-block", "width": "55%"});
   };
 
-
   $scope.registerUser = function() {
-    console.log("REGISTER USER")
     var firstName = $("#firstName").val();
     var lastName = $("#lastName").val();
     var emailAddress = $("#registerEmail").val();
 
     $http.post('../postgres', {
-      firstname: firstName,
-      lastname: lastName,
+      first_name: firstName,
+      last_name: lastName,
       email: emailAddress } )
     .then(function (response) {
-      console.log("REGISTER USER SUCCESS", response);
       }, function (error) {
       console.log(error);
     });
   };
 
-
   $scope.logout = function() {
-    console.log("LOGGGING OUTTTT", $scope.portfolioValue)
     $scope.userName = "";
     $scope.bankAccount = "";
     $scope.userId = "";
@@ -193,5 +189,4 @@ app.controller("MasterControl", ["$scope", "$rootScope", "$location", "$http", "
 
     $location.path('/#').replace();
   }
-
 }]);

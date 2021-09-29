@@ -20,7 +20,6 @@ const session = require('express-session')
 //     console.log("Error " + err);
 // });
 
-
 // passwordless.init(new redisStore(6379, '127.0.0.1'));
 
 // passwordless.addDelivery(
@@ -50,8 +49,6 @@ const session = require('express-session')
 // app.use(passwordless.sessionSupport());
 // app.use(passwordless.acceptToken({ successRedirect: '/#/profile'}));
 
-
-
 // Initializing the Knex library
 const pg = require('knex')({
   client: 'pg',
@@ -59,16 +56,15 @@ const pg = require('knex')({
   searchPath: ['knex', 'public'] // 'knex, public'
 });
 
+// Fetch user data
 router.post("/redisdata", (req, res) => {
   pg('users').where({
     email: req.body.email })
     .then(function(data) {
       console.log(data.length);
       if (data.length === 0) {
-        console.log("SERVER ERROR", data);
         res.sendStatus(400);
       } else {
-        console.log("SERVER SUCCESS", data);
         res.send(data);
       }
     })
@@ -76,7 +72,6 @@ router.post("/redisdata", (req, res) => {
       console.log("ERROR", err);
     });
 });
-
 
 // Check to see if user in database
 // router.post("/redisdata", (req, res) => {
@@ -107,6 +102,5 @@ router.post("/redisdata", (req, res) => {
 
 //   res.sendStatus(200);
 // });
-
 
 module.exports = router;

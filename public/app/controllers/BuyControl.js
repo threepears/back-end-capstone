@@ -13,7 +13,7 @@ app.controller("BuyControl", ["$scope", "$rootScope", "$location", "$http", "Sto
 
   $scope.makePurchase = function() {
 
-    var quantity = $("#stockQuantity").val();
+    var quantity = parseInt($("#stockQuantity").val());
 
     if (quantity > $scope.count) {
       $scope.numberShares = true;
@@ -28,34 +28,26 @@ app.controller("BuyControl", ["$scope", "$rootScope", "$location", "$http", "Sto
     $scope.bankAccount = $scope.bankAccount - cost;
 
     userinfo.setUserMoney($scope.bankAccount);
-
-    logged.bankaccount = $scope.bankAccount;
-
+    logged.bankAccount = $scope.bankAccount;
     localStorage.setItem('logged', JSON.stringify(logged));
 
     $http.put('../postgres', {
       bankAccount: $scope.bankAccount,
-      stocksymbol: $scope.indivStock,
-      stockname: $scope.companyName,
-      quantityowned: quantity,
-      purchaseprice: $scope.lastPrice,
-      userid: $scope.userId} )
+      stockSymbol: $scope.indivStock,
+      stockName: $scope.companyName,
+      quantityOwned: quantity,
+      purchasePrice: $scope.lastPrice,
+      userId: $scope.userId} )
     .then(function (response) {
-      console.log("SUCCESS", response);
       var stocks = stockinfo.getCurrentStockInfo($scope.userId);
-      console.log("STOCKS YOU OWN", stocks);
 
       stocks.then(function(response) {
-        console.log("CURRENT STOCKS", response);
         $scope.ownedStocks = response;
-        console.log($scope.ownedStocks);
         $location.path('/profile').replace();
       });
 
       }, function (error) {
       console.log(error);
     });
-
   }
-
 }]);

@@ -6,18 +6,20 @@ const request = require("request");
 
 router.get("/stock/:stock", (req, res) => {
   request('https://cloud.iexapis.com/stable/stock/' + req.params.stock + '/quote?token=' + process.env.API_KEY, (_error, _response, body) => {  
-    console.log("NEW API BODYYYYY", body);
-    let result = JSON.parse(body);
-    console.log("GET STOCK PROPS", result);
+    if (body === "Not found") {
+      res.status(500).send(`We could not find a stock with the symbol of ${req.params.stock}`);
+    } else {
+      let result = JSON.parse(body);
 
-    res.send({
-      indivStock: req.params.stock,
-      companyname: result["companyName"],
-      lastprice: result["latestPrice"],
-      todaysopen: result["open"],
-      todayshigh: result["high"],
-      todayslow: result["low"]
-    });
+      res.send({
+        indivStock: req.params.stock,
+        companyname: result["companyName"],
+        lastprice: result["latestPrice"],
+        todaysopen: result["open"],
+        todayshigh: result["high"],
+        todayslow: result["low"]
+      });
+    }
   });
 });
 

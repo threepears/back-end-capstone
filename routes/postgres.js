@@ -20,17 +20,17 @@ pg.schema.hasTable('users').then(function(exists) {
   if (!exists) {
     return pg.schema.createTable('users', function (table) {
       table.increments();
-      table.string('firstname');
-      table.string('lastname');
+      table.string('first_name');
+      table.string('last_name');
       table.string('email');
-      table.float('bankAccount');
-      table.float('currentProfit');
+      table.float('bank_account');
+      table.float('current_total_profit');
     })
     .then(function (data) {
-      console.log("HEY", data);
+      console.log("USERS TABLE CREATED", data);
     })
     .catch(function(error) {
-      console.log(error);
+      console.log("ERROR CREATING USERS TABLE", error);
     });
   }
 });
@@ -39,29 +39,28 @@ pg.schema.hasTable('stocks').then(function(exists) {
   if (!exists) {
     return pg.schema.createTable('stocks', function(table) {
       table.increments();
-      table.string('stocksymbol');
-      table.string('stockname');
-      table.integer('quantityowned');
-      table.float('purchaseprice');
-      table.float('currentprice');
-      table.date('datepurchased');
-      table.float('totalvalue');
-      table.integer('userid').references('users.id');
+      table.integer('user_id').references('users.id');
+      table.string('stock_symbol');
+      table.string('stock_name');
+      table.integer('quantity_owned');
+      table.date('date_purchased');
+      table.float('purchase_price');
+      table.float('current_price');
+      table.float('current_total_value');
+      table.float('current_profit');
     })
     .then(function (data) {
-      console.log("HEY2", data);
+      console.log("STOCKS TABLE CREATED", data);
     })
     .catch(function(error) {
-      console.log(error);
+      console.log("ERROR CREATING STOCKS TABLE", error);
     });
   }
 });
 
-
-
 // define a new schedule
 // var textSched = later.parse.text('at 15:15 every weekday');
-var textSched = later.parse.text('every 1 min');
+// var textSched = later.parse.text('every 1 min');
 
 // set later to use local time
 // later.date.localTime();
@@ -71,38 +70,74 @@ var textSched = later.parse.text('every 1 min');
 // later.setInterval(logTime, textSched);
 
 const getDistinctStocks = () => 
-  pg('stocks').distinct('stocksymbol').select()
+  pg('stocks').distinct('stock_symbol').select()
+
+const getScoreboardInfo = () =>
+  pg('users')
+    .select('first_name', 'current_total_profit')
+    .orderBy('current_total_profit', 'desc')
+    .limit(10)
 
 const getStockRow = stock => 
-  pg('stocks').where('stocksymbol', stock)
+  pg('stocks').where('stock_symbol', stock)
+
+const getUserIdFromEmail = email =>
+  pg('users').select('id').where('email', email)
+
+const getUserIds = () => pg('users').select('id')
+
+const getUserStocksProfit = id =>
+  pg('stocks').sum('current_profit').where('user_id', id)
+
+const updateUserProfit = ( id, profit ) => 
+  pg('users')
+    .where('id', id)
+    .update({ current_total_profit: profit || 0 })
+    .then()
 
 const updateStockInfo = (price, rowData) => 
   pg('stocks')
     .where('id', rowData.id)
-    .update({currentprice: price, totalvalue: price * rowData.quantityowned})
+    .update({
+      current_price: price, 
+      current_total_value: price * rowData.quantity_owned, current_profit: (price * rowData.quantity_owned) - (rowData.purchase_price * rowData.quantity_owned) || 0
+    })
+    .then()
+
+router.post("/stockprofit", async (req, res) => {
+  try {
+    const [ { id } ] = await getUserIdFromEmail(req.body.email)
+    const [ { sum } ] = await getUserStocksProfit(id)
+    updateUserProfit(id, sum)
+
+    return res.status(200).send('Stock profit written.');
+  } catch (error) {
+    console.error("GET STOCK PROFIT ERROR", error);
+    return res.status(500).send(error);
+  }
+})
 
 // function to execute
-// function logTime() {
+// function logTime()
+
 router.patch("/updatestocks", async (_req, res) => {
   try {
     const distinctStocks = await getDistinctStocks()
-    console.log("DISTINCT STOCKS", distinctStocks)
-    if (distinctStocks === 0) {
-      return res.send(400).status('No stocks found to update.');
+
+    if (distinctStocks.length === 0) {
+      return res.status(200).send('No stocks found to update.');
     } else {
-      const stocks = distinctStocks.map(st => st.stocksymbol)
+      const stocks = distinctStocks.map(st => st.stock_symbol)
       let allStocks = []
-      console.log("STONKS", stocks)
+
       stocks.forEach((each, stocksIndex) => {
         request('https://cloud.iexapis.com/stable/stock/' + each + '/quote?token=' + API_KEY, async (_error, _response, body) => {
           try {
             let price
-            console.log("GETTING STOCKS BODY CHECK", body, typeof(body))
+
             if (body !== "Unknown symbol" && body !== "Not found") {
               let allStockRows = []
-              console.log("GETTING READY TO PARSE", body)
               let result = JSON.parse(body)
-              console.log("WE DONE PARSED THAT", result)
               price = result.latestPrice || 0
               const stockRow = await getStockRow(each)
 
@@ -134,62 +169,50 @@ router.patch("/updatestocks", async (_req, res) => {
 // timer2.clear();
 
 // Get all stocks a user owns
-router.get("/scoreboard", (req, res) => {
-  console.log("GETTING THE SCOREBOARD", req.body);
-  pg('users').select('firstname', 'currentProfit').orderBy('currentProfit', 'desc').limit(10)
-    .then(function(data) {
-      console.log("SHOW SCOREBOARD PEEPS", data.length);
-      if (data.length === 0) {
-        console.log("GET SERVER ERROR", data);
-        res.sendStatus(400);
-      } else {
-        console.log("SCOREBOARD - GET SERVER SUCCESS", data);
-        res.send(data);
-      }
-    })
-    .catch((err) => {
-      console.log("GET ERROR", err);
-    })
+router.get("/scoreboard", async (_req, res) => {
+  try {
+    const userIds = (await getUserIds()).map(user => user.id)
+    
+    await Promise.all(userIds.map(async id => {
+      const [ profit ] = await getUserStocksProfit(id)
+      updateUserProfit(id, profit.sum)
+    }))
+    
+    const scoreboardInfo = await getScoreboardInfo()
+  
+    if (scoreboardInfo.length === 0) {
+      res.status(400).send('No scoreboard information available.');
+    } else {
+      res.send(scoreboardInfo);
+    }
+  } catch (error) {
+    console.log("GET SCOREBOARD ERROR", error);
+    return res.status(500).send(error);
+  }
 })
 
-
-// Get all stocks a user owns
-router.get("/userstocks", (req, res) => {
-
-  console.log("REQ BODY GET STOCKS", req.body);
-  pg('stocks').where('userid', req.body.userid)
-    .then(function(data) {
-      console.log("GET REQUEST ROUTE GET", data.length);
-      if (data.length === 0) {
-        console.log("GET SERVER ERROR", data);
-        res.sendStatus(400);
-      } else {
-        console.log("GET USERSTOCKS - GET SERVER SUCCESS", data);
-        res.send(data);
-      }
-    })
-    .catch((err) => {
-      console.log("GET ERROR", err);
-    })
-});
-
 // Get a user's owned stock info on login
-router.post("/userstocks", (req, res) => {
-  let userId = req.body.userid;
-
-  return pg('stocks').where('userid', userId)
+router.post("/userstocks", (req, res) => 
+  pg('stocks').where('user_id', req.body.userId)
     .then(function(data) {
-        res.send(data); 
-    }).catch((err) => {
-      console.log("GET ERROR", err);
-    })
-});
+      var camelize = string => 
+        string.split('_').reduce((acc, word, index,) => 
+          index === 0 ? acc + word : acc + word.charAt(0).toUpperCase() + word.slice(1), "")
 
+      var newData = data.map(stock => {
+        var newObject = {}
+        Object.entries(stock).map(([k, v]) => newObject[camelize(k)] = v)
+        return newObject
+      })
+      res.send(newData); 
+    }).catch((err) => {
+      console.log("GET USERSTOCKS ERROR", err);
+    })
+);
 
 // Insert new user into table
 router.post("/postgres", (req, res) => {
-
-  pg.insert({firstname: req.body.firstname, lastname: req.body.lastname, email: req.body.email, bankAccount: 1000, currentProfit: 0}, "id").into("users")
+  pg.insert({first_name: req.body.first_name, last_name: req.body.last_name, email: req.body.email, bank_account: 1000, current_total_profit: 0}, "id").into("users")
     .catch((err) => { console.log("ERROR", err) });
 
   res.sendStatus(200);
@@ -198,22 +221,16 @@ router.post("/postgres", (req, res) => {
 
 // Insert new stock info into table
 router.put("/postgres", (req, res) => {
-
   let date = new Date();
-  console.log("PUTTING NEW STOCK IN", req.body);
+  let total = req.body.purchasePrice * req.body.quantityOwned;
 
-  let total = req.body.purchaseprice * req.body.quantityowned;
-
-  pg("users").where('id', req.body.userid).update({bankAccount: req.body.bankAccount})
-
-    .catch((err) => { console.log("ERROR", err) });
-
-  pg.insert({stocksymbol: req.body.stocksymbol, stockname: req.body.stockname, quantityowned: req.body.quantityowned, purchaseprice: req.body.purchaseprice, currentprice: req.body.purchaseprice, datepurchased: date, totalvalue: total, userid: req.body.userid}, "id").into("stocks")
-    .then(function(data) {
-      res.sendStatus(200);
-      })
-    .catch((err) => { console.log("ERROR", err) });
-
+  pg.insert({stock_symbol: req.body.stockSymbol, stock_name: req.body.stockName, quantity_owned: req.body.quantityOwned, purchase_price: req.body.purchasePrice, current_price: req.body.purchasePrice, date_purchased: date, current_total_value: total, current_profit: 0, user_id: req.body.userId}, "id").into("stocks")
+    .then(function() {
+      pg("users").where('id', req.body.userId)
+        .update({bank_account: req.body.bankAccount})
+        .then(function(_data) { res.sendStatus(200); })
+        .catch((err) => { console.log("USERS UPDATE ERROR", err) })
+    })
 });
 
 

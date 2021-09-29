@@ -1,9 +1,7 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
-
   <head>
-
     <meta charset="utf-8">
     <base href="/">
     <title>Taking Stock - The Fun Stock Market Game</title>
@@ -15,12 +13,9 @@
     <link rel="stylesheet" href="vendor/jquery-ui/themes/base/autocomplete.css">
 
     <link rel="stylesheet" type="text/css" href="styles/main.css">
-
   </head>
 
-
   <body ng-app="TakingStockApp">
-
     <div ng-controller="MasterControl" id="master">
 
       <nav class="navbar navbar-default">
@@ -46,8 +41,6 @@
                     <div class="form-group">
                       <input type="text" id="autocomplete" class="form-control input- ui-autocomplete-input stockName" ng-model="symbolSearch" placeholder="Enter stock symbol here">
                     </div>
-                    <!-- <span class="help-inline hide"><img src="resources/spinner.gif" align="absmiddle" /> loading...</span>
-                    <span class="help-inline hide label label-info"></span> -->
                     <button type="submit" class="btn btn-primary searchButton" id="submitQuote" ng-click="getStockInfo();closeNav()">Search</button>
                   </form>
                 </ul>
@@ -61,9 +54,7 @@
         </div>
       </nav>
 
-
       <section ng-view id="container"></section>
-
     </div>
 
     <footer>
@@ -71,7 +62,6 @@
         &copy;2016 Taking Stock, Inc.
       </div>
     </footer>
-
 
     <!-- ANGULAR SCRIPTS -->
     <script src="vendor/angular/angular.min.js"></script>
@@ -81,7 +71,6 @@
     <script src="vendor/jquery/dist/jquery.min.js"></script>
     <script src="vendor/jquery-ui/jquery-ui.min.js"></script>
     <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-
 
 <!--     <script>
       $( "#autocomplete" ).autocomplete({
@@ -93,11 +82,9 @@
     <!-- APP.JS FILE -->
     <script src="app/app.js"></script>
 
-
     <!-- FACTORY SCRIPTS -->
     <script src="app/factories/StockInfo.js"></script>
     <script src="app/factories/UserInfo.js"></script>
-
 
     <!-- CONTROLLER SCRIPTS -->
     <script src="app/controllers/MasterControl.js"></script>
@@ -107,7 +94,5 @@
     <script src="app/controllers/ProfileControl.js"></script>
     <script src="app/controllers/ScoreboardControl.js"></script>
 
-
   </body>
-
 </html>

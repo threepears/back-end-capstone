@@ -3,7 +3,7 @@
     <div class="profilepic"></div>
     <div class="profileheader">
       <h1>{{userName}}</h1>
-      <h3 class="ranking">Taking $tock ranking: &nbsp;"Pauper"</h3>
+      <h3 class="ranking">Taking $tock ranking: &nbsp;{{rank}}</h3>
       <h3>Portfolio value: &nbsp;{{portfolioValue | currency}} &nbsp;&bull;&nbsp; Funds available: &nbsp;{{bankAccount | currency}}</h3>
     </div>
 
@@ -18,12 +18,12 @@
           <div class="tab fifth center">Profit/Loss</div>
           <div class="tab sixth center">Total Value</div></li>
         <li ng-class-even="'greystripe'" ng-class-odd="'whitestripe'" ng-repeat="stock in ownedStocks | orderBy:'stockname'">
-          <div class="tab first"><span class="colorAccent">{{stock.stockname}}</span></div>
-          <div class="tab second center">{{stock.quantityowned}}</div>
-          <div class="tab third center">{{stock.purchaseprice | currency}}</div>
-          <div class="tab fourth center">{{stock.currentprice | currency}}</div>
-          <div class="tab fifth center" ng-class="{'loss': stock.currentprice * stock.quantityowned - stock.purchaseprice * stock.quantityowned <= 0}">{{stock.currentprice * stock.quantityowned - stock.purchaseprice * stock.quantityowned | currency}}</div>
-          <div class="tab sixth center">{{stock.currentprice * stock.quantityowned | currency}}</div>
+          <div class="tab first"><span class="colorAccent">{{stock.stockName}}</span></div>
+          <div class="tab second center">{{stock.quantityOwned}}</div>
+          <div class="tab third center">{{stock.purchasePrice | currency}}</div>
+          <div class="tab fourth center">{{stock.currentPrice | currency}}</div>
+          <div class="tab fifth center" ng-class="{'loss': stock.currentPrice * stock.quantityOwned - stock.purchasePrice * stock.quantityOwned <= 0}">{{stock.currentPrice * stock.quantityOwned - stock.purchasePrice * stock.quantityOwned | currency}}</div>
+          <div class="tab sixth center">{{stock.currentPrice * stock.quantityOwned | currency}}</div>
         </li>
       </ul>
     </div>

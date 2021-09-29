@@ -3,12 +3,11 @@ app.factory("UserInfo",
 
     var userName;
     var userMoney;
+    var userProfit;
     var userId;
     var loggedIn;
 
-
     return {
-
       getSessionInfo: function(){
           return $q(function(resolve, reject){
           $http.get('/')
@@ -59,7 +58,5 @@ app.factory("UserInfo",
       getLoggedIn: function(){
         return loggedIn;
       }
-
   }
-
 }]);

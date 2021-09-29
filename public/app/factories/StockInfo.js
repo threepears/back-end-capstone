@@ -1,13 +1,13 @@
 app.factory("StockInfo",
   ["$http", "$q", function($http, $q) {
 
-    var companyName;
-    var indivStock;
-    var lastPrice;
-    var todaysHigh;
-    var todaysLow;
-    var todaysOpen;
-
+  var companyName;
+  var indivStock;
+  var lastPrice;
+  var todaysHigh;
+  var todaysLow;
+  var todaysOpen;
+  var errorMessage;
 
   return {
 
@@ -24,14 +24,12 @@ app.factory("StockInfo",
 
 
     getCurrentStockInfo: function(userId) {
-      return $q(function(resolve, reject){
+      return $q(function(resolve, reject) {
       $http.post('../userstocks', {
-        userid: userId } )
+        userId: userId } )
         .then(function (response) {
-          console.log("CURRENT STOCK INFO SUCCESS", response);
           resolve(response.data);
           }, function (error) {
-          console.log(error);
           reject(error);
           })
       });
@@ -84,6 +82,18 @@ app.factory("StockInfo",
 
     getTodaysOpen: function(){
       return todaysOpen;
+    },
+
+    setErrorMessage: function(error){
+      errorMessage = error;
+    },
+
+    clearErrorMessage: function(){
+      errorMessage = "";
+    },
+
+    getErrorMessage: function(){
+      return errorMessage;
     }
   }
 

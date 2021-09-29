@@ -4,32 +4,34 @@ app.controller("HomeControl",
 
   $scope.loginUser = function() {
     var emailAddress = $("#loginEmail").val();
-    console.log(emailAddress, " LOGGING IN!");
 
     $http.patch('../updatestocks')
       .then(function () {
-        $http.post('../redisdata', {
+        $http.post('../stockprofit', {
           email: emailAddress } )
-          .then(function (response) {
-            userinfo.setUserName(response.data[0].firstname);
-            userinfo.setUserMoney(response.data[0].bankAccount);
-            userinfo.setUserProfit(response.data[0].currentProfit)
-            userinfo.setUserId(response.data[0].id);
+            .then(function () {
+              $http.post('../redisdata', {
+                email: emailAddress } )
+                .then(function (response) {
+                  userinfo.setUserName(response.data[0].first_name);
+                  userinfo.setUserMoney(response.data[0].bank_account);
+                  userinfo.setUserProfit(response.data[0].current_total_profit)
+                  userinfo.setUserId(response.data[0].id);
+                  var logged = { 
+                    "loggedIn": true, 
+                    "userName": response.data[0].first_name, 
+                    "bankAccount": response.data[0].bank_account, 
+                    "currentTotalProfit": response.data[0].current_total_profit, 
+                    "userId": response.data[0].id 
+                  };
 
-            var logged = { 
-              "loggedin": true, 
-              "username": response.data[0].firstname, 
-              "bankaccount": response.data[0].bankAccount, 
-              "currentprofit": response.data[0].currentProfit, 
-              "userid": response.data[0].id 
-            };
+                  localStorage.setItem('logged', JSON.stringify(logged));
 
-            localStorage.setItem('logged', JSON.stringify(logged));
-
-            $location.path('/profile').replace();
-          }, function (_error) {
-          $scope.loginError = "You have not yet registered. Please register now!";
-        });
+                  $location.path('/profile').replace();
+                }, function (_error) {
+                $scope.loginError = "You have not yet registered. Please register now!";
+              });
+            });
       });
   };
 
