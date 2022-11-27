@@ -8,6 +8,7 @@ const request = require("request");
 const later = require("later");
 const API_KEY = process.env.API_KEY
 console.log("HERE IS A DATABASE URL", process.env.DATABASE_URL)
+
 // Initializing the Knex library
 const pg = require('knex')({
   client: 'pg',
