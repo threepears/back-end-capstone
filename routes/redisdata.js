@@ -5,6 +5,9 @@ const app = express();
 const router = express.Router();
 const session = require('express-session')
 
+// "passwordless": "^1.1.1",
+// "passwordless-redisstore": "^1.0.1",
+
 // const passwordless = require("passwordless");
 // const redis = require("redis");
 // const client = redis.createClient();
