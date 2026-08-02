@@ -3,14 +3,13 @@
 const express = require('express');
 const app = express();
 const router = express.Router();
-const request = require("request");
-// const { request } = require("gaxios");
 const later = require("later");
+const Knex = require('knex');
 const API_KEY = process.env.API_KEY
-console.log("HERE IS A DATABASE URL", process.env.DATABASE_URL)
+console.log("HERE IS PROCESS INFO", process.env)
 
 // Initializing the Knex library
-const pg = require('knex')({
+const pg = Knex({
   client: 'pg',
   connection: process.env.DATABASE_URL || 'postgres://localhost:5432/takingstock',
   searchPath: ['knex', 'public']
@@ -131,35 +130,43 @@ router.patch("/updatestocks", async (_req, res) => {
       const stocks = distinctStocks.map(st => st.stock_symbol)
       let allStocks = []
 
-      stocks.forEach((each, stocksIndex) => {
-        request('https://cloud.iexapis.com/stable/stock/' + each + '/quote?token=' + API_KEY, async (_error, _response, body) => {
-          try {
-            let price
 
-            if (body !== "Unknown symbol" && body !== "Not found") {
-              let allStockRows = []
-              let result = JSON.parse(body)
-              price = result.latestPrice || 0
-              const stockRow = await getStockRow(each)
+      const stockPromises = stocks.map(async (each, index) => {
+        const response = await fetch('https://cloud.iexapis.com/stable/stock/' + each + '/quote?token=' + API_KEY);
 
-              stockRow.forEach(async (row, stockRowIndex) => {
-                let updated = await updateStockInfo(price, row)
-                updated && allStockRows.push(stockRowIndex)
+        console.log("STOCK PROMISES RESPONSE", response)
 
-                if (stockRow.length === allStockRows.length) {
-                  allStocks.push(stocksIndex)
-                }
+        try {
+          let price
 
-                if (allStocks.length === stocks.length) {
-                  res.sendStatus(200)
-                }
-              })
-            }
-          } catch (error) {
-            console.error("FOR EACH STOCK UPDATE ERROR", error)
+          if (body !== "Unknown symbol" && body !== "Not found") {
+            let allStockRows = []
+            let result = JSON.parse(body)
+            price = result.latestPrice || 0
+            const stockRow = await getStockRow(each)
+
+            stockRow.forEach(async (row, stockRowIndex) => {
+              let updated = await updateStockInfo(price, row)
+              updated && allStockRows.push(stockRowIndex)
+
+              if (stockRow.length === allStockRows.length) {
+                allStocks.push(stocksIndex)
+              }
+
+              if (allStocks.length === stocks.length) {
+                res.sendStatus(200)
+              }
+            })
           }
-        })
-      })
+        } catch (error) {
+          console.error("FOR EACH STOCK UPDATE ERROR", error)
+        }
+
+        return response.json();
+      });
+
+      const results = await Promise.all(stockPromises);
+
     }
   } catch (error) {
     console.error("UPDATE STOCKS ERROR", error)

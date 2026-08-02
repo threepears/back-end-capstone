@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "engines": {
-    "node": "8.9.1",
-    "npm": "5.7.1"
+    "node": "^22.16.0",
+    "npm": "^10.9.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -26,18 +26,17 @@
   "dependencies": {
     "body-parser": "^1.15.0",
     "bower": "^1.7.7",
-    "connect-session-knex": "^2.0.0",
-    "emailjs": "^1.0.4",
-    "express": "^4.13.4",
+    "connect-session-knex": "^5.0.0",
+    "emailjs": "^5.0.2",
+    "express": "^5.2.1",
     "express-session": "^1.13.0",
-    "knex": "^0.10.0",
+    "knex": "^3.3.0",
     "later": "^1.2.0",
-    "pg": "^4.5.1",
-    "redis": "^2.5.3",
-    "request": "^2.69.0"
+    "pg": "^8.22.0",
+    "redis": "^6.1.0"
   },
   "devDependencies": {
     "bower": "^1.7.7",
-    "nodemon": "^1.9.0"
+    "nodemon": "^3.1.14"
   }
 }

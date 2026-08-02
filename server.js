@@ -2,7 +2,6 @@
 
 const express = require("express");
 const app = express();
-const request = require("request");
 const session = require("express-session");
 
 const path = require("path");
@@ -12,7 +11,7 @@ const bodyparser = require("body-parser");
 const PORT = process.env.PORT || 3000;
 
 // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
-app.all('*', function(req, res, next) {
+app.all('*splat', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.header("X-Frame-Options", "SAMEORIGIN");
@@ -34,7 +33,7 @@ let sess;
 app.get('/',function(req,res){
     sess = req.session;
 
-    console.log(sess);
+    console.log("SESSION", sess);
     /*
     * Here we have assign the 'session' to 'sess'.
     * Now we can create any number of session variable we want.
