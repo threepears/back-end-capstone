@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/threepears/back-end-capstone#readme",
   "dependencies": {
-    "body-parser": "^1.15.0",
+    "body-parser": "^2.3.0",
     "bower": "^1.7.7",
     "connect-session-knex": "^5.0.0",
     "emailjs": "^5.0.2",
