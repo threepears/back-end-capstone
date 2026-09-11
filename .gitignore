@@ -41,4 +41,5 @@ public/styles/.sass-cache/
 
 # Miscellaneous
 .DS_Store
+.env
 dump.rdb

@@ -173,6 +173,37 @@ router.patch("/updatestocks", async (_req, res) => {
   }
 });
 
+      // REQUEST MODULE REPLACED WITH NATIVE NODE FETCH ABOVE ...
+      // stocks.forEach((each, stocksIndex) => {
+      //   request('https://cloud.iexapis.com/stable/stock/' + each + '/quote?token=' + API_KEY, async (_error, _response, body) => {
+      //     try {
+      //       let price
+
+      //       if (body !== "Unknown symbol" && body !== "Not found") {
+      //         let allStockRows = []
+      //         let result = JSON.parse(body)
+      //         price = result.latestPrice || 0
+      //         const stockRow = await getStockRow(each)
+
+      //         stockRow.forEach(async (row, stockRowIndex) => {
+      //           let updated = await updateStockInfo(price, row)
+      //           updated && allStockRows.push(stockRowIndex)
+
+      //           if (stockRow.length === allStockRows.length) {
+      //             allStocks.push(stocksIndex)
+      //           }
+
+      //           if (allStocks.length === stocks.length) {
+      //             res.sendStatus(200)
+      //           }
+      //         })
+      //       }
+      //     } catch (error) {
+      //       console.error("FOR EACH STOCK UPDATE ERROR", error)
+      //     }
+      //   })
+      // })
+
 // clear the interval timer when you are done
 // timer2.clear();
 

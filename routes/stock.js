@@ -2,26 +2,50 @@
 
 const express = require('express');
 const router = express.Router();
-// const request = require("request");
 
-router.get("/stock/:stock", (req, res) => {
-  console.log("HEY NOW STOCK STUFF!!!!")
-  // request('https://cloud.iexapis.com/stable/stock/' + req.params.stock + '/quote?token=' + process.env.API_KEY, (_error, _response, body) => {  
-  //   if (body === "Not found") {
-  //     res.status(500).send(`We could not find a stock with the symbol of ${req.params.stock}`);
-  //   } else {
-  //     let result = JSON.parse(body);
+const API_KEY = process.env.FINNHUB_API_KEY
 
-  //     res.send({
-  //       indivStock: req.params.stock,
-  //       companyname: result["companyName"],
-  //       lastprice: result["latestPrice"],
-  //       todaysopen: result["open"],
-  //       todayshigh: result["high"],
-  //       todayslow: result["low"]
-  //     });
-  //   }
-  // });
+router.get("/stock/:stock", async (req, res) => {
+  const STOCK_SYMBOL = req.params.stock
+
+  const profileUrl = `https://finnhub.io/api/v1/search?q=${req.params.stock}&token=${API_KEY}`
+  const quoteUrl = `https://finnhub.io/api/v1/quote?symbol=${req.params.stock}&token=${API_KEY}`
+
+  console.log("PROFILE URL", profileUrl)
+  console.log("QUOTE URL", quoteUrl)
+
+  try {
+      // Fire both HTTP requests simultaneously
+      const [quoteRes, profileRes] = await Promise.all([
+          fetch(quoteUrl),
+          fetch(profileUrl)
+      ]);
+
+      const quoteData = await quoteRes.json();
+      const { result: profileData } = await profileRes.json();
+
+      console.log("QUOTE DATA", quoteData)
+      console.log("PROFILE DATA", profileData)
+
+      const [ { description: stockName } ] = profileData.filter(p => p.displaySymbol === STOCK_SYMBOL)
+
+      // Check if Finnhub returned an empty profile (invalid symbol)
+      if (!stockName) {
+        res.status(500).send(`We could not find a stock with the symbol of ${STOCK_SYMBOL}`);
+      }
+
+      // Return stock results
+      res.send({
+        indivStock: STOCK_SYMBOL,
+        companyname: stockName,
+        lastprice: quoteData.c,
+        todaysopen: quoteData.o,
+        todayshigh: quoteData.h,
+        todayslow: quoteData.l
+      });
+  } catch (error) {
+      console.error("Error finding stock symbol:", error);
+  }
 });
 
 // For use with AutoComplete feature in MasterControl.js
